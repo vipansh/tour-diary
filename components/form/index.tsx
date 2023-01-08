@@ -1,11 +1,14 @@
 import { useRouter } from "next/router";
 import React, { useState } from "react";
+import { toast } from "react-toastify";
 import { OneDayDetailsProps, useTourDiaryDetails } from "../../data";
 import EndingPoint from "./EndingPoint";
 
-type Props = {};
+type Props = {
+  closeModal: () => void;
+};
 
-const Form = ({}: Props) => {
+const Form = ({ closeModal }: Props) => {
   const router = useRouter();
   const { monthName } = router.query as { monthName: string };
   const [data, setData] = useState<OneDayDetailsProps>({});
@@ -48,11 +51,13 @@ const Form = ({}: Props) => {
     e.preventDefault();
     console.log(data, monthName);
     updateDataInsideMonth(monthName, data);
+    toast.success(`Data added for date ${data.date}`);
+    closeModal();
   };
   console.log({ details });
   return (
     <form autoComplete="false">
-      <div className="min-h-screen bg-gray-100 py-6 flex flex-col justify-center sm:py-12">
+      <div className="min-h-screen  py-6 flex flex-col justify-center sm:py-12">
         <div className="relative py-3 sm:max-w-xl sm:mx-auto">
           <div className="relative px-4 py-10 bg-white mx-8 md:mx-0 shadow rounded-3xl sm:p-10">
             <div className="max-w-md mx-auto">
@@ -197,7 +202,10 @@ const Form = ({}: Props) => {
                   </div>
                 </div>
                 <div className="pt-4 flex items-center space-x-4">
-                  <button className="flex justify-center items-center w-full text-gray-900 px-4 py-3 rounded-md focus:outline-none">
+                  <button
+                    onClick={closeModal}
+                    className="flex justify-center items-center w-full text-gray-900 px-4 py-3 rounded-md focus:outline-none"
+                  >
                     <svg
                       className="w-6 h-6 mr-3"
                       fill="none"
