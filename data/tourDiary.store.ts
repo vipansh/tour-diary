@@ -1,6 +1,10 @@
 import { format } from "date-fns";
 import create from "zustand";
-import { addLocalStorageItem, STORAGE_KEYS } from "../utils/localStorage";
+import {
+  addLocalStorageItem,
+  getLocalStorageItem,
+  STORAGE_KEYS,
+} from "../utils/localStorage";
 // import storage from "shared/utils/storage";
 
 import {
@@ -29,13 +33,10 @@ const defaultDateviseData: OneDayDetailsProps[] = [
   },
 ];
 
+const localStorageData = getLocalStorageItem(STORAGE_KEYS.MONTH_DATA_LIST);
+console.log({ localStorageData });
 const defaultState: TourDiaryDetailsState = {
-  details: [
-    {
-      monthName: "",
-      data: defaultDateviseData,
-    },
-  ],
+  details: JSON.parse(localStorageData || "[]"),
 };
 
 export const useTourDiaryDetails = create<TourDiaryDetailsStore>((set) => ({
@@ -78,5 +79,29 @@ export const useTourDiaryDetails = create<TourDiaryDetailsStore>((set) => ({
       };
     });
   },
+
+  updateDataInsideMonth(monthName: string, value: OneDayDetailsProps) {
+    set((state) => {
+      const newDetails = state.details.map((detail) => {
+        if (detail.monthName === monthName) {
+          return {
+            ...detail,
+            data: detail.data ? [...detail.data, value] : [value],
+          };
+        }
+        return detail;
+      });
+      const newValue = {
+        ...state,
+        details: newDetails,
+      };
+      addLocalStorageItem(
+        STORAGE_KEYS.MONTH_DATA_LIST,
+        JSON.stringify(newDetails)
+      );
+      return newValue;
+    });
+  },
+
   clearTourDiaryDetails: () => set(defaultState),
 }));

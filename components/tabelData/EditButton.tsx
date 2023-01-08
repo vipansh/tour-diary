@@ -1,13 +1,20 @@
 import React, { SVGProps } from "react";
+import { useRouter } from "next/router";
 
-type Props = {};
+type Props = {
+  monthName: string;
+};
 
-const EditButton = (props: Props) => {
+const EditButton = ({ monthName }: Props) => {
+  const router = useRouter();
+
   return (
     <div>
       <button
         className="bg-violet-500 text-white group flex w-full items-center rounded-md px-2 py-2 text-sm"
-        onClick={() => {}}
+        onClick={() => {
+          router.push(`/month/${monthName}`);
+        }}
       >
         <EditIcon className="mr-2 h-5 w-5 text-white-400" aria-hidden="true" />
         Edit
