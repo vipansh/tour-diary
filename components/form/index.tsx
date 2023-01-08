@@ -3,9 +3,7 @@ import React from "react";
 type Props = {};
 
 const Form = ({}: Props) => {
-  return <div>
-    
-  </div>;
+  return <div></div>;
 };
 
 export default Form;

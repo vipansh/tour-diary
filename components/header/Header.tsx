@@ -1,5 +1,5 @@
-import React from "react";
-
+import React, { useEffect, useRef } from "react";
+import { ToastContainer, toast } from "react-toastify";
 type Props = {};
 
 const Header = (props: Props) => {
@@ -42,6 +42,8 @@ export default Header;
 
 import { Dialog, Transition } from "@headlessui/react";
 import { Fragment, useState } from "react";
+import { useTourDiaryDetails } from "../../data";
+import { format } from "date-fns";
 
 type MyModalProps = {
   isOpen: boolean;
@@ -49,8 +51,72 @@ type MyModalProps = {
 };
 
 function MyModal({ isOpen, closeModal }: MyModalProps) {
+  const inputRef = useRef<HTMLInputElement>(null);
+  const { details, addMonth } = useTourDiaryDetails();
+
+  const [error, setError] = useState({
+    showError: false,
+    message: "",
+  });
+
+  const notify = () => {
+    setError({
+      showError: true,
+      message: "This field is required",
+    });
+    toast("Enter the month and year");
+  };
+
+  function hasMonth(newMonth: string): boolean {
+    // Iterate over the elements in the props array
+    for (const prop of details) {
+      // Check if the monthName property is defined in the prop object
+      // and if the value of monthName is equal to the newMonth string
+      console.log(prop, prop.monthName, newMonth);
+      if (prop.monthName !== undefined && prop.monthName === newMonth) {
+        return true;
+      }
+    }
+    return false;
+  }
+
+  const creatNewFile = () => {
+    console.log("create a new file");
+    const value = (inputRef.current as HTMLInputElement).value;
+    if (value) {
+      if (details) {
+        if (hasMonth(format(new Date(value), "MMMM-yyyy"))) {
+          toast.error("Month and year already exist");
+          setError({
+            showError: true,
+            message: `${format(
+              new Date(value),
+              "MMMM-yyyy"
+            )} Month and year already exist`,
+          });
+          if (inputRef.current) {
+            inputRef.current.value = "";
+          }
+          return;
+        }
+        addMonth(value);
+        toast.success("Month and year sucessufly added");
+        closeModal();
+      } else {
+        addMonth(value);
+      }
+    } else {
+      notify();
+      console.log(value);
+    }
+  };
+
+  useEffect(() => {
+    inputRef.current?.focus();
+  }, []);
+
   return (
-    <>
+    <div>
       <Transition appear show={isOpen} as={Fragment}>
         <Dialog as="div" className="relative z-10" onClose={closeModal}>
           <Transition.Child
@@ -81,7 +147,24 @@ function MyModal({ isOpen, closeModal }: MyModalProps) {
                     as="h3"
                     className="text-lg font-medium leading-6 text-gray-900"
                   >
-                    Create a toud diary for a new month
+                    <div className="flex justify-between">
+                      Create a toud diary for a new month
+                      <svg
+                        xmlns="http://www.w3.org/2000/svg"
+                        fill="none"
+                        viewBox="0 0 24 24"
+                        stroke-width="1.5"
+                        stroke="currentColor"
+                        className="w-6 h-6 cursor-pointer"
+                        onClick={closeModal}
+                      >
+                        <path
+                          stroke-linecap="round"
+                          stroke-linejoin="round"
+                          d="M6 18L18 6M6 6l12 12"
+                        />
+                      </svg>
+                    </div>
                   </Dialog.Title>
                   <div className="mt-2">
                     <p className="text-sm text-gray-500">
@@ -92,10 +175,26 @@ function MyModal({ isOpen, closeModal }: MyModalProps) {
                         >
                           Enter the month/year
                           <input
-                            className="shadow appearance-none border rounded w-full py-2 px-3 text-gray-700 leading-tight focus:outline-none focus:shadow-outline"
+                            className={
+                              "shadow appearance-none border rounded w-full py-2 px-3 text-gray-700 leading-tight focus:outline-none focus:shadow-outline " +
+                              `${error ? " border-red-600" : ""}`
+                            }
                             id="month-year"
                             type="month"
+                            ref={inputRef}
+                            onChange={() => {
+                              error.showError &&
+                                setError({
+                                  showError: false,
+                                  message: "",
+                                });
+                            }}
                           />
+                          {error.showError && (
+                            <span className=" text-red-500">
+                              {error.message}
+                            </span>
+                          )}
                         </label>
                       </div>
                       We will create a new sheet for this month. However if this
@@ -108,7 +207,7 @@ function MyModal({ isOpen, closeModal }: MyModalProps) {
                     <button
                       type="button"
                       className="inline-flex justify-center rounded-md border border-transparent bg-blue-100 px-4 py-2 text-sm font-medium text-blue-900 hover:bg-blue-200 focus:outline-none focus-visible:ring-2 focus-visible:ring-blue-500 focus-visible:ring-offset-2"
-                      onClick={closeModal}
+                      onClick={creatNewFile}
                     >
                       Create
                     </button>
@@ -119,6 +218,6 @@ function MyModal({ isOpen, closeModal }: MyModalProps) {
           </div>
         </Dialog>
       </Transition>
-    </>
+    </div>
   );
 }

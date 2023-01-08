@@ -1,10 +1,16 @@
 import React, { SVGProps } from "react";
 import { Fragment, useState } from "react";
 import { Dialog, Transition } from "@headlessui/react";
+import { useTourDiaryDetails } from "../../data";
+import { toast } from "react-toastify";
 
-type Props = {};
+type Props = {
+  monthName: string;
+};
 
-const DeleteButton = (props: Props) => {
+const DeleteButton = ({ monthName }: Props) => {
+  const { deleteMonth } = useTourDiaryDetails();
+
   let [isOpen, setIsOpen] = useState(false);
 
   function closeModal() {
@@ -14,6 +20,12 @@ const DeleteButton = (props: Props) => {
   function openModal() {
     setIsOpen(true);
   }
+
+  const deleteMonthData = () => {
+    toast.info(`${monthName} deleted successfully`);
+    deleteMonth(monthName);
+    closeModal();
+  };
 
   return (
     <>
@@ -43,41 +55,53 @@ const DeleteButton = (props: Props) => {
                 leaveTo="opacity-0 scale-95"
               >
                 <Dialog.Panel className="w-full max-w-md transform overflow-hidden rounded-2xl bg-white p-6 text-left align-middle shadow-xl transition-all">
-                  <Dialog.Description>
-                    <div className="text-center p-5 flex-auto justify-center">
+                  <Dialog.Title
+                    as="h3"
+                    className="text-lg font-medium leading-6 text-gray-900"
+                  >
+                    <div className="flex justify-between text-red-500">
+                      Are you sure you want to delete this data ?
                       <svg
                         xmlns="http://www.w3.org/2000/svg"
-                        className="w-16 h-16 flex items-center text-red-500 mx-auto"
-                        viewBox="0 0 20 20"
-                        fill="currentColor"
+                        fill="none"
+                        viewBox="0 0 24 24"
+                        stroke-width="1.5"
+                        stroke="currentColor"
+                        className="w-6 h-6 cursor-pointer"
+                        onClick={closeModal}
                       >
                         <path
-                          fill-rule="evenodd"
-                          d="M9 2a1 1 0 00-.894.553L7.382 4H4a1 1 0 000 2v10a2 2 0 002 2h8a2 2 0 002-2V6a1 1 0 100-2h-3.382l-.724-1.447A1 1 0 0011 2H9zM7 8a1 1 0 012 0v6a1 1 0 11-2 0V8zm5-1a1 1 0 00-1 1v6a1 1 0 102 0V8a1 1 0 00-1-1z"
-                          clip-rule="evenodd"
+                          stroke-linecap="round"
+                          stroke-linejoin="round"
+                          d="M6 18L18 6M6 6l12 12"
                         />
                       </svg>
-                      <h2 className="text-xl font-bold py-4 ">Are you sure?</h2>
-                      <p className="text-sm text-gray-500 px-8">
-                        Do you really want to delete your data? This process
-                        cannot be undone
-                      </p>
                     </div>
-                    <div className="p-3  mt-2 text-center space-x-4 md:block">
-                      <button
-                        className="mb-2 md:mb-0 bg-white px-5 py-2 text-sm shadow-sm font-medium tracking-wider border text-gray-600 rounded-full hover:shadow-lg hover:bg-gray-100"
-                        onClick={closeModal}
-                      >
-                        Cancel
-                      </button>
-                      <button
-                        className="mb-2 md:mb-0 bg-red-500 border border-red-500 px-5 py-2 text-sm shadow-sm font-medium tracking-wider text-white rounded-full hover:shadow-lg hover:bg-red-600"
-                        onClick={closeModal}
-                      >
-                        Delete
-                      </button>
-                    </div>
-                  </Dialog.Description>
+                  </Dialog.Title>
+                  <div className="mt-2">
+                    <p className="text-sm text-gray-500">
+                      Are you sure you want to delete the data for {monthName}.
+                      This action cannot be undone and the data will be
+                      permanently deleted.
+                    </p>
+                  </div>
+
+                  <div className="mt-4 flex justify-end space-x-8">
+                    <button
+                      type="button"
+                      className="inline-flex justify-center rounded-md border border-transparent bg-blue-100 px-4 py-2 text-sm font-medium text-blue-900 hover:bg-blue-200 focus:outline-none focus-visible:ring-2 focus-visible:ring-blue-500 focus-visible:ring-offset-2"
+                      onClick={closeModal}
+                    >
+                      Back
+                    </button>
+                    <button
+                      type="button"
+                      className="inline-flex justify-center rounded-md border border-transparent bg-red-100 px-4 py-2 text-sm font-medium text-red-900 hover:bg-red-200 focus:outline-none focus-visible:ring-2 focus-visible:ring-red-500 focus-visible:ring-offset-2"
+                      onClick={deleteMonthData}
+                    >
+                      Delete
+                    </button>
+                  </div>
                 </Dialog.Panel>
               </Transition.Child>
             </div>
@@ -110,14 +134,14 @@ const DeleteActiveIcon: React.FC<DeleteActiveIconProps> = (props) => {
       xmlns="http://www.w3.org/2000/svg"
       fill="none"
       viewBox="0 0 24 24"
-      stroke-width="1.5"
+      strokeWidth="1.5"
       stroke="currentColor"
       className="w-6 h-6"
       {...props}
     >
       <path
-        stroke-linecap="round"
-        stroke-linejoin="round"
+        strokeLinecap="round"
+        strokeLinejoin="round"
         d="M14.74 9l-.346 9m-4.788 0L9.26 9m9.968-3.21c.342.052.682.107 1.022.166m-1.022-.165L18.16 19.673a2.25 2.25 0 01-2.244 2.077H8.084a2.25 2.25 0 01-2.244-2.077L4.772 5.79m14.456 0a48.108 48.108 0 00-3.478-.397m-12 .562c.34-.059.68-.114 1.022-.165m0 0a48.11 48.11 0 013.478-.397m7.5 0v-.916c0-1.18-.91-2.164-2.09-2.201a51.964 51.964 0 00-3.32 0c-1.18.037-2.09 1.022-2.09 2.201v.916m7.5 0a48.667 48.667 0 00-7.5 0"
       />
     </svg>
