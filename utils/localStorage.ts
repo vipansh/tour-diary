@@ -42,4 +42,5 @@ export {
 
 export const STORAGE_KEYS = {
   MONTH_DATA_LIST: "monthDataList",
+  DATABASE: "database",
 };

@@ -8,7 +8,7 @@ import { useReactToPrint } from "react-to-print";
 
 type Props = {};
 
-const TR7 = (props: Props) => {
+const TourDiary = (props: Props) => {
   const { details } = useTourDiaryDetails();
   const router = useRouter();
   const { monthName } = router.query as { monthName: string };
@@ -50,7 +50,7 @@ const TR7 = (props: Props) => {
   const handlePrint = useReactToPrint({
     content: () => componentRef.current,
     copyStyles: true,
-    documentTitle: `${monthName} TR7`,
+    documentTitle: `${monthName} TourDiary`,
   });
 
   return (
@@ -72,15 +72,9 @@ const TR7 = (props: Props) => {
                   }}
                   className=""
                 >
-                  <div> H.P.T.R.- 7 </div>
-                  <div> TRAVELLING EXPENSES CLAIM FORM </div>
-                  <div>1.Establishment- CDPO Chowari Month- {monthName}</div>
-                  <div> 2. Name and Designation- Meenakshi,Supervisor </div>
                   <div>
-                    3. Basic Pay- BP- 10300+ GP- 3200 Head Qtr.- Dhulara
-                  </div>
-                  <div>
-                    4. Purpose of Journey- List of Tour Programme attached
+                    Tour Diary in r/o Sh./Smt. Meenakshi Circle Supervisor
+                    Dhulara, Project Chowari for the m/o {monthName}
                   </div>
                 </div>
                 <table
@@ -97,35 +91,15 @@ const TR7 = (props: Props) => {
                       <th colSpan={2} scope="col" className="border-r">
                         Arrival
                       </th>
-                      <th rowSpan={2} scope="col" className="border-r">
-                        Mode of Travel
-                      </th>
                       <th rowSpan={2} scope="col" className="border-r ">
-                        Rate class <br />
-                        of <br />
-                        Travel (Km.)
+                        Mode <br /> of <br /> Journey
                       </th>
                       <th rowSpan={2} scope="col" className="border-r">
-                        Actual <br />
-                        Fare
-                        <br /> Paid
+                        Distance
+                        <br /> in KM
                       </th>
                       <th rowSpan={2} scope="col" className="border-r">
-                        Hotel <br />
-                        Charges <br />
-                        if any
-                      </th>
-                      <th colSpan={2} scope="col" className="border-r">
-                        Daily
-                        <br /> Allowance
-                      </th>
-                      <th rowSpan={2} scope="col" className="border-r">
-                        Amount
-                      </th>
-                      <th rowSpan={2} scope="col" className="border-r">
-                        Total <br />
-                        of
-                        <br /> Line
+                        Purpose <br /> of Journey
                       </th>
                     </tr>
                     <tr className="border-b ">
@@ -137,29 +111,6 @@ const TR7 = (props: Props) => {
                       <th className="border-r">
                         Date &<br /> Hour
                       </th>
-                      <th className="border-r">
-                        No. <br />
-                        of
-                        <br /> Days
-                      </th>
-                      <th className="border-r p-1">
-                        Rate
-                        <br /> admissibl
-                      </th>
-                    </tr>
-                    <tr className="border-b p-1">
-                      <td className="border-r p-1">1</td>
-                      <td className="border-r p-1">2</td>
-                      <td className="border-r p-1">3</td>
-                      <td className="border-r p-1">4</td>
-                      <td className="border-r p-1">5</td>
-                      <td className="border-r p-1">6</td>
-                      <td className="border-r p-1">7</td>
-                      <td className="border-r p-1">8(on foot)</td>
-                      <td className="border-r p-1">9</td>
-                      <td className="border-r p-1">10</td>
-                      <td className="border-r p-1">11</td>
-                      <td className="border-r p-1">12</td>
                     </tr>
                   </thead>
                   <tbody>
@@ -202,35 +153,7 @@ const TR7 = (props: Props) => {
                             <td className="border-r p-1">
                               {detail.distanceByBus}/{detail.distanceOnFoot}
                             </td>
-                            <td className="border-r p-1">
-                              {detail.distanceByBus &&
-                                Math.floor(detail.distanceByBus * 2.2).toFixed(
-                                  2
-                                )}
-                            </td>
-                            <td className="border-r p-1">
-                              {detail.distanceOnFoot &&
-                                Math.floor(detail.distanceOnFoot * 1).toFixed(
-                                  2
-                                )}
-                            </td>
-                            <td rowSpan={2} className="border-r p-1">
-                              {addDaily ? "  70%" : "-"}
-                            </td>
-                            <td rowSpan={2} className="border-r p-1">
-                              {addDaily ? "72/-" : "-"}
-                            </td>
-                            <td rowSpan={2} className="border-r p-1">
-                              {addDaily ? "50.00" : "-"}
-                            </td>
-                            <td rowSpan={2} className="border-r p-1">
-                              {(
-                                2 *
-                                (Math.floor(detail.distanceByBus || 0 * 2.2) +
-                                  Math.floor(detail.distanceOnFoot || 0 * 1) +
-                                  (addDaily ? 50 : 0))
-                              ).toFixed(2)}
-                            </td>
+                            <td className="border-r p-1">{detail.note}</td>
                           </tr>
                           <tr className="border-b border-gray-400 ">
                             <td className="border-r p-1">
@@ -256,39 +179,29 @@ const TR7 = (props: Props) => {
                             <td className="border-r p-1">
                               {detail.distanceByBus}/{detail.distanceOnFoot}
                             </td>
-                            <td className="border-r p-1">
-                              {detail.distanceByBus &&
-                                Math.floor(detail.distanceByBus * 2.2).toFixed(
-                                  2
-                                )}
-                            </td>
-                            <td className="border-r p-1">
-                              {detail.distanceOnFoot &&
-                                Math.floor(detail.distanceOnFoot * 1).toFixed(
-                                  2
-                                )}
-                            </td>
+                            <td className="border-r p-1">{detail.note}</td>
                           </tr>
                         </Fragment>
                       );
                     })}
-                    <tr>
-                      <td colSpan={6}>Grand Total</td>
-                      <td>{totalFair.totalFairForBus.toFixed(2)}</td>
-                      <td>{totalFair.totalFairOnFoot.toFixed(2)}</td>
-                      <td> </td>
-                      <td> </td>
-                      <td>{totalFair.totalDaily.toFixed(2)}</td>
-                      <td>
-                        {(
-                          totalFair.totalFairForBus +
-                          totalFair.totalFairOnFoot +
-                          totalFair.totalDaily
-                        ).toFixed(2)}
-                      </td>
-                    </tr>
                   </tbody>
                 </table>
+                <div
+                  className="flex justify-between w-3/5 mx-auto mt-12"
+                  style={{
+                    fontSize: "0.5rem",
+                  }}
+                >
+                  <div className="flex space-y-3 flex-col justify-start align-top">
+                    <div>Approved</div>
+                    <div>Child Development Project Officer </div>
+                    <div>Chowari, Distt. Chamba,H.P. </div>
+                  </div>
+                  <div className="flex space-y-6 flex-col justify-start align-top">
+                    <div>Meenakshi</div>
+                    <div>Circle Supervisor Circle- Dhulara</div>
+                  </div>
+                </div>
               </div>
             </div>
           </div>
@@ -298,4 +211,4 @@ const TR7 = (props: Props) => {
   );
 };
 
-export default TR7;
+export default TourDiary;

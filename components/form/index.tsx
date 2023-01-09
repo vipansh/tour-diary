@@ -2,6 +2,11 @@ import { useRouter } from "next/router";
 import React, { useState } from "react";
 import { toast } from "react-toastify";
 import { OneDayDetailsProps, useTourDiaryDetails } from "../../data";
+import {
+  addLocalStorageItem,
+  getLocalStorageItem,
+  STORAGE_KEYS,
+} from "../../utils/localStorage";
 import EndingPoint from "./EndingPoint";
 
 type Props = {
@@ -17,6 +22,11 @@ const Form = ({ closeModal }: Props) => {
   const handelChange = (event: React.ChangeEvent<HTMLInputElement>) => {
     setData({ ...data, [event.target.name]: event.target.value });
   };
+
+  const localStorageDatabase = getLocalStorageItem(STORAGE_KEYS.DATABASE);
+  const database: { [key: string]: OneDayDetailsProps } = localStorageDatabase
+    ? JSON.parse(localStorageDatabase)
+    : [];
 
   const handelStartChanges = (event: React.ChangeEvent<HTMLInputElement>) => {
     setData({
@@ -39,6 +49,12 @@ const Form = ({ closeModal }: Props) => {
 
   const heandelEndPointName = (value: string) => {
     console.log(value);
+
+    if (database[value]) {
+      setData(database[value]);
+      toast.success("Data autofilled");
+      return;
+    }
     setData({
       ...data,
       endPoint: {
@@ -49,12 +65,18 @@ const Form = ({ closeModal }: Props) => {
   };
   const createData = (e: React.MouseEvent<HTMLButtonElement, MouseEvent>) => {
     e.preventDefault();
-    console.log(data, monthName);
     updateDataInsideMonth(monthName, data);
     toast.success(`Data added for date ${data.date}`);
+    {
+      data?.endPoint?.name &&
+        addLocalStorageItem(
+          STORAGE_KEYS.DATABASE,
+          JSON.stringify({ ...database, [data.endPoint.name]: data })
+        );
+    }
     closeModal();
   };
-  console.log({ details });
+  console.log({ data });
   return (
     <form autoComplete="false">
       <div className="min-h-screen  py-6 flex flex-col justify-center sm:py-12">
@@ -84,6 +106,7 @@ const Form = ({ closeModal }: Props) => {
                         className="px-4 py-2 border focus:ring-gray-500 focus:border-gray-900 w-full sm:text-sm border-gray-300 rounded-md focus:outline-none text-gray-600"
                         placeholder="Event title"
                         name="date"
+                        value={data.date || ""}
                         onChange={handelChange}
                       />
                     </div>
@@ -106,6 +129,7 @@ const Form = ({ closeModal }: Props) => {
                           className="px-4 py-2 border focus:ring-gray-500 focus:border-gray-900 w-full sm:text-sm border-gray-300 rounded-md focus:outline-none text-gray-600"
                           placeholder="Event title"
                           name="startTime"
+                          value={data.endPoint?.startTime || ""}
                           onChange={handelEndChnages}
                         />
                       </div>
@@ -116,6 +140,7 @@ const Form = ({ closeModal }: Props) => {
                           className="px-4 py-2 border focus:ring-gray-500 focus:border-gray-900 w-full sm:text-sm border-gray-300 rounded-md focus:outline-none text-gray-600"
                           placeholder="Event title"
                           name="endTime"
+                          value={data.endPoint?.endTime || ""}
                           onChange={handelEndChnages}
                         />
                       </div>
@@ -131,6 +156,7 @@ const Form = ({ closeModal }: Props) => {
                         className="px-4 py-2 border focus:ring-gray-500 focus:border-gray-900 w-full sm:text-sm border-gray-300 rounded-md focus:outline-none text-gray-600"
                         placeholder="Event title"
                         name="name"
+                        value={data.startingPoint?.name || ""}
                         onChange={handelStartChanges}
                       />
                     </div>
@@ -142,6 +168,7 @@ const Form = ({ closeModal }: Props) => {
                           className="px-4 py-2 border focus:ring-gray-500 focus:border-gray-900 w-full sm:text-sm border-gray-300 rounded-md focus:outline-none text-gray-600"
                           placeholder="Event title"
                           name="startTime"
+                          value={data.startingPoint?.startTime || ""}
                           onChange={handelStartChanges}
                         />
                       </div>
@@ -152,6 +179,7 @@ const Form = ({ closeModal }: Props) => {
                           className="px-4 py-2 border focus:ring-gray-500 focus:border-gray-900 w-full sm:text-sm border-gray-300 rounded-md focus:outline-none text-gray-600"
                           placeholder="Event title"
                           name="endTime"
+                          value={data.startingPoint?.endTime || ""}
                           onChange={handelStartChanges}
                         />
                       </div>
@@ -169,6 +197,7 @@ const Form = ({ closeModal }: Props) => {
                           className="px-4 py-2 border focus:ring-gray-500 focus:border-gray-900 w-full sm:text-sm border-gray-300 rounded-md focus:outline-none text-gray-600"
                           placeholder="Event title"
                           name="distanceByBus"
+                          value={data.distanceByBus || ""}
                           onChange={handelChange}
                         />
                       </div>
@@ -181,6 +210,7 @@ const Form = ({ closeModal }: Props) => {
                           className="px-4 py-2 border focus:ring-gray-500 focus:border-gray-900 w-full sm:text-sm border-gray-300 rounded-md focus:outline-none text-gray-600"
                           placeholder="Event title"
                           name="distanceOnFoot"
+                          value={data.distanceOnFoot || ""}
                           onChange={handelChange}
                         />
                       </div>
@@ -196,6 +226,7 @@ const Form = ({ closeModal }: Props) => {
                         className="px-4 py-2 border focus:ring-gray-500 focus:border-gray-900 w-full sm:text-sm border-gray-300 rounded-md focus:outline-none text-gray-600"
                         placeholder="Event title"
                         name="note"
+                        value={data.note || ""}
                         onChange={handelChange}
                       />
                     </div>

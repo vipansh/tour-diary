@@ -1,11 +1,18 @@
-import { Dialog, Transition } from "@headlessui/react";
+import { Dialog, Tab, Transition } from "@headlessui/react";
 import { useRouter } from "next/router";
 import React, { Fragment, useState } from "react";
 import Form from "../form";
 
-type Props = {};
+type Props = {
+  selectedIndex: number;
+  toggleShow: () => void;
+};
 
-const Navbar = ({}: Props) => {
+function classNames(...classes: (string | undefined | false)[]) {
+  return classes.filter(Boolean).join(" ");
+}
+
+const Navbar = ({ selectedIndex, toggleShow }: Props) => {
   const router = useRouter();
   const [openAddModal, setOpenAddModal] = useState(false);
 
@@ -71,6 +78,30 @@ const Navbar = ({}: Props) => {
           <button className="inline-flex justify-center rounded-md border border-transparent bg-red-100 px-4 py-2 text-sm font-medium text-red-900 hover:bg-red-200 focus:outline-none focus-visible:ring-2 focus-visible:ring-red-500 focus-visible:ring-offset-2">
             Switch to TR7
           </button>
+
+          <Tab.Group>
+            <Tab.List className="flex space-x-1 rounded-xl bg-blue-900/20 p-1">
+              {["Switch to TR7", "Switch to Tour diary"].map(
+                (category, index) => (
+                  <Tab
+                    key={category}
+                    className={({}) =>
+                      classNames(
+                        "w-full rounded-lg  text-sm font-medium  text-blue-700",
+                        "ring-white ring-opacity-60 ring-offset-2 ring-offset-blue-400 focus:outline-none focus:ring-2",
+                        selectedIndex === index
+                          ? "bg-white shadow text-blue-300"
+                          : "text-blue-700 hover:bg-white/[0.12] hover:text-white"
+                      )
+                    }
+                    onClick={toggleShow}
+                  >
+                    {category}
+                  </Tab>
+                )
+              )}
+            </Tab.List>
+          </Tab.Group>
         </div>
       </div>
     </Fragment>
