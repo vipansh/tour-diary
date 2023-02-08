@@ -11,11 +11,23 @@ type Props = {
 const TableRow = ({ data }: Props) => {
   console.log(data);
   return (
-    <tr className="odd:bg-gray-100">
-      <td className="px-4 py-2 flex-1">{data.monthName}</td>
-      <td className="px-4 py-2 flex space-x-8 align-middle justify-center ">
-        {data.monthName && <EditButton monthName={data.monthName} />}
-        {data.monthName && <DeleteButton monthName={data.monthName} />}
+    <tr className="focus:outline-none">
+      <td className="pt-6">
+        <div className="flex items-center">
+          <div className="pl-3">
+            <div className="flex items-center text-sm leading-none">
+              <p className="font-semibold text-gray-800 dark:text-white ">
+                {data.monthName}
+              </p>
+            </div>
+          </div>
+        </div>
+      </td>
+      <td className="pl-16 pt-6">
+        <div className="flex space-x-2">
+          {data.monthName && <EditButton monthName={data.monthName} />}
+          {data.monthName && <DeleteButton monthName={data.monthName} />}
+        </div>
       </td>
     </tr>
   );
