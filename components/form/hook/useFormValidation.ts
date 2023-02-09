@@ -3,7 +3,7 @@ import { useState, useCallback } from "react";
 import { OneDayDetailsProps } from "../../../data";
 
 const useFormValidation = () => {
-  const [errors, setErrors] = useState<Object>({});
+  const [errors, setErrors] = useState<any>();
 
   const validateDetails = useCallback((state: OneDayDetailsProps): boolean => {
     const errors: any = {};
@@ -21,19 +21,11 @@ const useFormValidation = () => {
       }
 
       if (!startingPoint || startingPoint?.name?.trim() === "") {
-        errors.startingPoint.name = "*startingPoint name is required";
+        errors.startingPointName = "*startingPoint name is required";
       }
 
       if (!endPoint || endPoint?.name?.trim() === "") {
-        errors.endPoint.name = "*endPoint name is required";
-      }
-
-      if (!distanceByBus || !Number.isInteger(distanceByBus)) {
-        errors.distanceByBus = "*distanceByBus is not a valid number";
-      }
-
-      if (!distanceOnFoot || !Number.isInteger(distanceOnFoot)) {
-        errors.distanceOnFoot = "*distanceOnFoot is not a valid number";
+        errors.endPointName = "*endPoint name is required";
       }
 
       if (!note || note.trim() === "") {

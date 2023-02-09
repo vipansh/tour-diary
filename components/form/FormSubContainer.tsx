@@ -12,7 +12,7 @@ const FormSubContainer: React.FC<FormSubContainerProps> = ({
   discription,
 }) => {
   return (
-    <div className="shadow sm:overflow-hidden sm:rounded-md  m-4 p-4 rounded-md">
+    <div className="border-2  sm:rounded-md  m-4 p-4 rounded-md flex-1 ">
       <div className="md:grid md:grid-cols-3 md:gap-6 ">
         <div className="md:col-span-1">
           <div className="px-4 sm:px-0">

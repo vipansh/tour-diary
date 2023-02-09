@@ -19,7 +19,7 @@ const Form = ({ closeModal }: Props) => {
   const router = useRouter();
   const { monthName } = router.query as { monthName: string };
   const [data, setData] = useState<OneDayDetailsProps>({});
-  const { validateDetails } = useFormValidation();
+  const { errors, validateDetails } = useFormValidation();
   const { details, updateDataInsideMonth } = useTourDiaryDetails();
   const handelChange = (event: React.ChangeEvent<HTMLInputElement>) => {
     setData({ ...data, [event.target.name]: event.target.value });
@@ -102,13 +102,14 @@ const Form = ({ closeModal }: Props) => {
   console.log({ data });
   return (
     <form autoComplete="false">
-      <div className="mx-auto">
+      <div>
         <FormSubContainer title={"Date"}>
           <div className="flex flex-col">
-            <label className="leading-loose">Date</label>
             <input
               type="date"
-              className="px-4 py-2 border focus:ring-gray-500 focus:border-gray-900 w-full sm:text-sm border-gray-300 rounded-md focus:outline-none text-gray-600"
+              className={`px-4 py-2 border focus:ring-gray-500 focus:border-gray-900 w-full sm:text-sm border-gray-300 rounded-md focus:outline-none text-gray-600 ${
+                !!errors?.date ? "border-red-700 border-2" : ""
+              }`}
               placeholder="Event title"
               name="date"
               value={data.date || ""}
@@ -116,85 +117,100 @@ const Form = ({ closeModal }: Props) => {
             />
           </div>
         </FormSubContainer>
-        <FormSubContainer title={"Ending point"}>
-          <div className="flex flex-col">
-            <label className="leading-loose">Ending Point</label>
-            <EndingPoint
-              selectedValue={data.endPoint?.name || ""}
-              onChange={heandelEndPointName}
-            />
-          </div>
-          <div className="flex flex-row space-x-4">
+        <div className="flex flex-col md:flex-row flex-1">
+          <FormSubContainer title={"Ending point"}>
             <div className="flex flex-col">
-              <label className="leading-loose">Start time </label>
-              <input
-                type="time"
-                className="px-4 py-2 border focus:ring-gray-500 focus:border-gray-900 w-full sm:text-sm border-gray-300 rounded-md focus:outline-none text-gray-600"
-                placeholder="Event title"
-                name="startTime"
-                value={data.endPoint?.startTime || ""}
-                onChange={handelEndChnages}
+              <EndingPoint
+                selectedValue={data.endPoint?.name || ""}
+                onChange={heandelEndPointName}
               />
             </div>
-            <div className="flex flex-col">
-              <label className="leading-loose">End time </label>
-              <input
-                type="time"
-                className="px-4 py-2 border focus:ring-gray-500 focus:border-gray-900 w-full sm:text-sm border-gray-300 rounded-md focus:outline-none text-gray-600"
-                placeholder="Event title"
-                name="endTime"
-                value={data.endPoint?.endTime || ""}
-                onChange={handelEndChnages}
-              />
+            <div className="flex flex-row space-x-4">
+              <div className="flex flex-col">
+                <label className="leading-loose">Start time </label>
+                <input
+                  type="time"
+                  className={`px-4 py-2 border focus:ring-gray-500 focus:border-gray-900 w-full sm:text-sm border-gray-300 rounded-md focus:outline-none text-gray-600 ${
+                    !!errors?.endPointStartTime ? "border-red-700 border-2" : ""
+                  }`}
+                  placeholder="Event title"
+                  name="startTime"
+                  value={data.endPoint?.startTime || ""}
+                  onChange={handelEndChnages}
+                />
+              </div>
+              <div className="flex flex-col">
+                <label className="leading-loose">End time </label>
+                <input
+                  type="time"
+                  className={`px-4 py-2 border focus:ring-gray-500 focus:border-gray-900 w-full sm:text-sm border-gray-300 rounded-md focus:outline-none text-gray-600 ${
+                    !!errors?.endPointEndTime ? "border-red-700 border-2" : ""
+                  }`}
+                  placeholder="Event title"
+                  name="endTime"
+                  value={data.endPoint?.endTime || ""}
+                  onChange={handelEndChnages}
+                />
+              </div>
             </div>
-          </div>
-        </FormSubContainer>
+          </FormSubContainer>
 
-        <FormSubContainer title={"Starting point"}>
-          <div className="flex flex-col">
-            <label className="leading-loose">Starting Point</label>
-            <input
-              type="text"
-              className="px-4 py-2 border focus:ring-gray-500 focus:border-gray-900 w-full sm:text-sm border-gray-300 rounded-md focus:outline-none text-gray-600"
-              placeholder="Event title"
-              name="name"
-              value={data.startingPoint?.name || ""}
-              onChange={handelStartChanges}
-            />
-          </div>
-          <div className="flex flex-row space-x-4">
+          <FormSubContainer title={"Starting point"}>
             <div className="flex flex-col">
-              <label className="leading-loose">Start time </label>
               <input
-                type="time"
-                className="px-4 py-2 border focus:ring-gray-500 focus:border-gray-900 w-full sm:text-sm border-gray-300 rounded-md focus:outline-none text-gray-600"
+                type="text"
+                className={`px-4 py-2 border focus:ring-gray-500 focus:border-gray-900 w-full sm:text-sm border-gray-300 rounded-md focus:outline-none text-gray-600 ${
+                  !!errors?.startingPointName ? "border-red-700 border-2" : ""
+                }`}
                 placeholder="Event title"
-                name="startTime"
-                value={data.startingPoint?.startTime || ""}
+                name="name"
+                value={data.startingPoint?.name || ""}
                 onChange={handelStartChanges}
               />
             </div>
-            <div className="flex flex-col">
-              <label className="leading-loose">End time </label>
-              <input
-                type="time"
-                className="px-4 py-2 border focus:ring-gray-500 focus:border-gray-900 w-full sm:text-sm border-gray-300 rounded-md focus:outline-none text-gray-600"
-                placeholder="Event title"
-                name="endTime"
-                value={data.startingPoint?.endTime || ""}
-                onChange={handelStartChanges}
-              />
+            <div className="flex flex-row space-x-4">
+              <div className="flex flex-col">
+                <label className="leading-loose">Start time </label>
+                <input
+                  type="time"
+                  className={`px-4 py-2 border focus:ring-gray-500 focus:border-gray-900 w-full sm:text-sm border-gray-300 rounded-md focus:outline-none text-gray-600 ${
+                    !!errors?.startingPointStartTime
+                      ? "border-red-700 border-2"
+                      : ""
+                  }`}
+                  placeholder="Event title"
+                  name="startTime"
+                  value={data.startingPoint?.startTime || ""}
+                  onChange={handelStartChanges}
+                />
+              </div>
+              <div className="flex flex-col">
+                <label className="leading-loose">End time </label>
+                <input
+                  type="time"
+                  className={`px-4 py-2 border focus:ring-gray-500 focus:border-gray-900 w-full sm:text-sm border-gray-300 rounded-md focus:outline-none text-gray-600 ${
+                    !!errors?.startingPointEndTime
+                      ? "border-red-700 border-2"
+                      : ""
+                  }`}
+                  placeholder="Event title"
+                  name="endTime"
+                  value={data.startingPoint?.endTime || ""}
+                  onChange={handelStartChanges}
+                />
+              </div>
             </div>
-          </div>
-        </FormSubContainer>
-
+          </FormSubContainer>
+        </div>
         <FormSubContainer title={"Distance"}>
           <div className="flex flex-row space-x-4">
             <div className="flex flex-col">
               <label className="leading-loose">Distance by bus</label>
               <input
                 type="number"
-                className="px-4 py-2 border focus:ring-gray-500 focus:border-gray-900 w-full sm:text-sm border-gray-300 rounded-md focus:outline-none text-gray-600"
+                className={`px-4 py-2 border focus:ring-gray-500 focus:border-gray-900 w-full sm:text-sm border-gray-300 rounded-md focus:outline-none text-gray-600 ${
+                  !!errors?.distanceByBus ? "border-red-700 border-2" : ""
+                }`}
                 placeholder="Event title"
                 name="distanceByBus"
                 value={data.distanceByBus || ""}
@@ -205,7 +221,9 @@ const Form = ({ closeModal }: Props) => {
               <label className="leading-loose">Distance on foot</label>
               <input
                 type="number"
-                className="px-4 py-2 border focus:ring-gray-500 focus:border-gray-900 w-full sm:text-sm border-gray-300 rounded-md focus:outline-none text-gray-600"
+                className={`px-4 py-2 border focus:ring-gray-500 focus:border-gray-900 w-full sm:text-sm border-gray-300 rounded-md focus:outline-none text-gray-600 ${
+                  !!errors?.distanceOnFoot ? "border-red-700 border-2" : ""
+                }`}
                 placeholder="Event title"
                 name="distanceOnFoot"
                 value={data.distanceOnFoot || ""}
@@ -217,13 +235,17 @@ const Form = ({ closeModal }: Props) => {
         <FormSubContainer title={"Note"}>
           <div className="flex flex-col">
             <label className="leading-loose">Note Point</label>
-            <input
-              type="text"
-              className="px-4 py-2 border focus:ring-gray-500 focus:border-gray-900 w-full sm:text-sm border-gray-300 rounded-md focus:outline-none text-gray-600"
+            <textarea
+              rows={3}
+              className={`px-4 py-2 border focus:ring-gray-500 focus:border-gray-900 w-full sm:text-sm border-gray-300 rounded-md focus:outline-none text-gray-600 ${
+                !!errors?.note ? "border-red-700 border-2" : ""
+              }`}
               placeholder="Event title"
               name="note"
               value={data.note || ""}
-              onChange={handelChange}
+              onChange={(e) => {
+                setData({ ...data, [e.target.name]: e.target.value });
+              }}
             />
           </div>
         </FormSubContainer>

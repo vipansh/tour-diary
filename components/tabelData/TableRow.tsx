@@ -24,7 +24,7 @@ const TableRow = ({ data }: Props) => {
         </div>
       </td>
       <td className="pl-16 pt-6">
-        <div className="flex space-x-2">
+        <div className="flex space-x-2 justify-end">
           {data.monthName && <EditButton monthName={data.monthName} />}
           {data.monthName && <DeleteButton monthName={data.monthName} />}
         </div>
