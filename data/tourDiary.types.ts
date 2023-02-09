@@ -30,4 +30,5 @@ export interface TourDiaryDetailsStore extends TourDiaryDetailsState {
   clearTourDiaryDetails: () => void;
   deleteMonth(monthName: string): void;
   updateDataInsideMonth(monthName: string, value: OneDayDetailsProps): void;
+  deleteDateInsideMonth(monthName: string, date: string): void;
 }

@@ -1,6 +1,6 @@
 import { format } from "date-fns";
 import React from "react";
-import { OneMonthDetiailsProp } from "../../data";
+import { OneMonthDetiailsProp, useTourDiaryDetails } from "../../data";
 import DeleteButton from "./DeleteButton";
 import EditButton from "./EditButton";
 
@@ -9,6 +9,8 @@ type Props = {
 };
 
 const TableRow = ({ data }: Props) => {
+  const { deleteMonth } = useTourDiaryDetails();
+
   return (
     <tr className="focus:outline-none">
       <td className="pt-6">
@@ -25,7 +27,12 @@ const TableRow = ({ data }: Props) => {
       <td className="pl-16 pt-6">
         <div className="flex space-x-2 justify-end">
           {data.monthName && <EditButton monthName={data.monthName} />}
-          {data.monthName && <DeleteButton monthName={data.monthName} />}
+          {data.monthName && (
+            <DeleteButton
+              monthName={data.monthName}
+              handelDeleteAction={() => deleteMonth(data.monthName as string)}
+            />
+          )}
         </div>
       </td>
     </tr>

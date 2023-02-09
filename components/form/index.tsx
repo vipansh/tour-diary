@@ -266,7 +266,10 @@ const Form = ({ closeModal }: Props) => {
         <div className="divide-y divide-gray-200">
           <div className="pt-4 flex items-center space-x-4 justify-end">
             <button
-              onClick={closeModal}
+              onClick={(e) => {
+                e.preventDefault();
+                closeModal();
+              }}
               className="flex rounded border border-current px-4 py-2 text-sm font-medium text-red-600 transition hover:rotate-2 hover:scale-110 focus:outline-none focus:ring active:text-red-500"
             >
               <svg
@@ -277,8 +280,8 @@ const Form = ({ closeModal }: Props) => {
                 xmlns="http://www.w3.org/2000/svg"
               >
                 <path
-                  stroke-linecap="round"
-                  stroke-linejoin="round"
+                  strokeLinecap="round"
+                  strokeLinejoin="round"
                   stroke-width="2"
                   d="M6 18L18 6M6 6l12 12"
                 ></path>

@@ -99,6 +99,31 @@ export const useTourDiaryDetails = create<TourDiaryDetailsStore>((set) => ({
       return newValue;
     });
   },
+  deleteDateInsideMonth(monthName: string, date: string) {
+    set((state) => {
+      const newDetails = state.details.map(
+        (monthDetail: OneMonthDetiailsProp) => {
+          if (monthDetail.monthName === monthName) {
+            return {
+              ...monthDetail,
+              data: monthDetail?.data?.filter(
+                (dayDetail: OneDayDetailsProps) => dayDetail.date !== date
+              ),
+            };
+          }
+          return monthDetail;
+        }
+      );
 
+      addLocalStorageItem(
+        STORAGE_KEYS.MONTH_DATA_LIST,
+        JSON.stringify(newDetails)
+      );
+      return {
+        ...state,
+        details: newDetails,
+      };
+    });
+  },
   clearTourDiaryDetails: () => set(defaultState),
 }));

@@ -1,7 +1,7 @@
 import React, { useState } from "react";
 import FormModal from "../form/FormModal";
 import Navbar from "./Navbar";
-import TourDiary from "./TourDiary";
+import TourDiary from "./TourDiaryContainer";
 import TR7 from "./TR7";
 
 type Props = {};
@@ -17,9 +17,9 @@ const OneMonthData = (props: Props) => {
   const closeModal = () => {
     setOpenAddModal(false);
   };
-  console.log(showTourDiary);
+  console.log({ showTourDiary });
   return (
-    <div className="mx-auto shadow-md bg-gray-900 text-white h-screen py-8">
+    <div className="mx-auto shadow-md bg-gray-900 text-white h-full min-h-screen py-8">
       <FormModal openAddModal={openAddModal} closeModal={closeModal} />
       <Navbar
         selectedIndex={showTourDiary ? 0 : 1}
@@ -27,7 +27,7 @@ const OneMonthData = (props: Props) => {
           setShowTourDiary(!showTourDiary);
         }}
       />
-      <div className="bg-white text-gray-900  h-screen">
+      <div className="bg-white text-gray-900  w-3/4 mx-auto rounded-lg min-h-screen">
         {showTourDiary ? (
           <TourDiary openModal={openModal} />
         ) : (

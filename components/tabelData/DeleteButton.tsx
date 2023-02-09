@@ -6,11 +6,10 @@ import { toast } from "react-toastify";
 
 type Props = {
   monthName: string;
+  handelDeleteAction: () => void;
 };
 
-const DeleteButton = ({ monthName }: Props) => {
-  const { deleteMonth } = useTourDiaryDetails();
-
+const DeleteButton = ({ monthName, handelDeleteAction }: Props) => {
   let [isOpen, setIsOpen] = useState(false);
 
   function closeModal() {
@@ -23,7 +22,7 @@ const DeleteButton = ({ monthName }: Props) => {
 
   const deleteMonthData = () => {
     toast.info(`${monthName} deleted successfully`);
-    deleteMonth(monthName);
+    handelDeleteAction();
     closeModal();
   };
 
@@ -71,8 +70,8 @@ const DeleteButton = ({ monthName }: Props) => {
                         onClick={closeModal}
                       >
                         <path
-                          stroke-linecap="round"
-                          stroke-linejoin="round"
+                          strokeLinecap="round"
+                          strokeLinejoin="round"
                           d="M6 18L18 6M6 6l12 12"
                         />
                       </svg>
