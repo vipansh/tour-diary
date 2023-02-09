@@ -46,9 +46,9 @@ const TR7 = ({ openModal }: Props) => {
 
   const ref = React.createRef<HTMLDivElement>();
 
-  const componentRef = useRef<HTMLDivElement>(null);
+  const tr7componentRef = useRef<HTMLDivElement>(null);
   const handlePrint = useReactToPrint({
-    content: () => componentRef.current,
+    content: () => tr7componentRef.current,
     copyStyles: true,
     documentTitle: `${monthName} TR7`,
   });
@@ -63,7 +63,7 @@ const TR7 = ({ openModal }: Props) => {
                 className="group flex items-center justify-between rounded-lg border border-indigo-600 bg-indigo-600 px-5 py-1 text-white hover:bg-indigo-800"
                 onClick={handlePrint}
               >
-                Print this out!
+                Print TR7 out!
                 <span className="ml-4 flex-shrink-0 rounded-full border border-current bg-white p-1 text-indigo-600 group-active:text-indigo-500">
                   <svg
                     xmlns="http://www.w3.org/2000/svg"
@@ -90,7 +90,7 @@ const TR7 = ({ openModal }: Props) => {
               </button>
             </div>
 
-            <div className="overflow-hidden" ref={componentRef}>
+            <div className="overflow-hidden" ref={tr7componentRef}>
               <div className="m-4">
                 <div
                   style={{

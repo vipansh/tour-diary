@@ -11,7 +11,7 @@ type Props = {
 };
 
 const TourDiary = ({ openModal }: Props) => {
-  const [setshowDeleteButton, setsetshowDeleteButton] = useState(true);
+  const [setshowDeleteButton, setsetshowDeleteButton] = useState(false);
   const { details } = useTourDiaryDetails();
   const router = useRouter();
   const { monthName } = router.query as { monthName: string };
@@ -76,7 +76,7 @@ const TourDiary = ({ openModal }: Props) => {
                   className="group flex items-center justify-between rounded-lg border border-indigo-600 bg-indigo-600 px-5 py-1 text-white hover:bg-indigo-800"
                   onClick={handlePrint}
                 >
-                  Print this out!
+                  Print Tour Diary out!
                   <span className="ml-4 flex-shrink-0 rounded-full border border-current bg-white p-1 text-indigo-600 group-active:text-indigo-500">
                     <svg
                       xmlns="http://www.w3.org/2000/svg"
@@ -102,7 +102,7 @@ const TourDiary = ({ openModal }: Props) => {
                   Create New line
                 </button>
               </div>
-              <div className="overflow-hidden  " ref={componentRef}>
+              <div className="" ref={componentRef}>
                 <div className="m-4">
                   <div
                     style={{
@@ -116,13 +116,13 @@ const TourDiary = ({ openModal }: Props) => {
                     </div>
                   </div>
                   <table
-                    className="table-auto min-w-full border text-start  text-gray-900 font-light px-6 py-4  border-r"
+                    className="table-auto min-w-full border text-start  text-gray-900 font-light   border-r"
                     style={{
                       fontSize: "0.5rem",
                     }}
                   >
                     <thead className="border-b">
-                      <tr className="border-b p-1">
+                      <tr className="border-b">
                         <th colSpan={2} scope="col" className="border-r">
                           Departure
                         </th>
@@ -164,7 +164,11 @@ const TourDiary = ({ openModal }: Props) => {
 
                         return (
                           <Fragment key={index}>
-                            <tr className="border-b mt-1 ">
+                            <tr
+                              className="border-b mt-1  cursor-pointer "
+                              onMouseEnter={addDeleteIcon}
+                              onMouseLeave={removeDeleteIcon}
+                            >
                               <td className="border-r p-1">
                                 {detail.startingPoint?.name}
                               </td>
@@ -176,6 +180,45 @@ const TourDiary = ({ openModal }: Props) => {
                               </td>
                               <td className="border-r p-1">
                                 {detail.endPoint?.name}
+                              </td>
+                              <td className="border-r p-1">
+                                {detail.date &&
+                                  format(new Date(detail.date), "dd-MM-yyyy")}
+                                <br />
+                                {convert24To12(detail.startingPoint?.endTime)}
+                              </td>
+
+                              <td className="border-r p-1">
+                                {"By Bus/On foot"}
+                              </td>
+                              <td className="border-r p-1">
+                                {detail.distanceByBus}/{detail.distanceOnFoot}
+                              </td>
+                              <td className="border-r p-1 relative">
+                                {detail.note}
+                                {setshowDeleteButton && (
+                                  <button className="absolute inset-x-0 -right-52 top-0 z-20">
+                                    delete row
+                                  </button>
+                                )}
+                              </td>
+                            </tr>
+                            <tr
+                              className="border-b border-gray-400 "
+                              onMouseEnter={addDeleteIcon}
+                              onMouseLeave={removeDeleteIcon}
+                            >
+                              <td className="border-r p-1">
+                                {detail.endPoint?.name}
+                              </td>
+                              <td className="border-r p-1">
+                                {detail.date &&
+                                  format(new Date(detail.date), "dd-MM-yyyy")}
+                                <br />
+                                {convert24To12(detail.startingPoint?.startTime)}
+                              </td>
+                              <td className="border-r p-1">
+                                {detail.startingPoint?.name}
                               </td>
                               <td className="border-r p-1">
                                 {detail.date &&
@@ -191,39 +234,6 @@ const TourDiary = ({ openModal }: Props) => {
                                 {detail.distanceByBus}/{detail.distanceOnFoot}
                               </td>
                               <td className="border-r p-1">{detail.note}</td>
-                            </tr>
-                            <tr className="border-b border-gray-400 ">
-                              <td className="border-r p-1">
-                                {detail.endPoint?.name}
-                              </td>
-                              <td className="border-r p-1">
-                                {detail.date &&
-                                  format(new Date(detail.date), "dd-MM-yyyy")}
-                                <br />
-                                {convert24To12(detail.startingPoint?.startTime)}
-                              </td>
-                              <td className="border-r p-1">
-                                {detail.startingPoint?.name}
-                              </td>
-                              <td className="border-r p-1">
-                                {detail.date &&
-                                  format(new Date(detail.date), "dd-MM-yyyy")}
-                                <br />
-                                {convert24To12(detail.startingPoint?.endTime)}
-                              </td>
-
-                              <td className="border-r p-1">
-                                {"By Bus/On foot"}
-                              </td>
-                              <td className="border-r p-1">
-                                {detail.distanceByBus}/{detail.distanceOnFoot}
-                              </td>
-                              <td className="border-r p-1">
-                                {detail.note}
-                                {setshowDeleteButton && (
-                                  <button>delete row</button>
-                                )}
-                              </td>
                             </tr>
                           </Fragment>
                         );
