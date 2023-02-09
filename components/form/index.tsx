@@ -15,9 +15,21 @@ type Props = {
   closeModal: () => void;
 };
 
+function getDateRange(monthYear: string): { min: string; max: string } {
+  const [month, year] = monthYear.split("-");
+  const monthIndex = new Date(Date.parse(`${month} 1, ${year}`)).getMonth();
+  const maxDate = new Date(Number(year), monthIndex + 1, 0)
+    .toISOString()
+    .split("T")[0];
+  const minDate = `${year}-${("0" + (monthIndex + 1)).slice(-2)}-01`;
+  return { min: minDate, max: maxDate };
+}
+
 const Form = ({ closeModal }: Props) => {
   const router = useRouter();
   const { monthName } = router.query as { monthName: string };
+
+  const { min, max } = getDateRange(monthName);
   const [data, setData] = useState<OneDayDetailsProps>({});
   const { errors, validateDetails } = useFormValidation();
   const { details, updateDataInsideMonth } = useTourDiaryDetails();
@@ -100,6 +112,7 @@ const Form = ({ closeModal }: Props) => {
     }
   };
   console.log({ data });
+
   return (
     <form autoComplete="false">
       <div>
@@ -107,6 +120,8 @@ const Form = ({ closeModal }: Props) => {
           <div className="flex flex-col">
             <input
               type="date"
+              min={min}
+              max={max}
               className={`px-4 py-2 border focus:ring-gray-500 focus:border-gray-900 w-full sm:text-sm border-gray-300 rounded-md focus:outline-none text-gray-600 ${
                 !!errors?.date ? "border-red-700 border-2" : ""
               }`}
