@@ -77,8 +77,6 @@ const Form = ({ closeModal }: Props) => {
   };
 
   const heandelEndPointName = (value: string) => {
-    console.log(value);
-
     if (database[value]) {
       const prefilledValues = database[value];
       prefilledValues.date = data.date;
@@ -111,7 +109,6 @@ const Form = ({ closeModal }: Props) => {
       toast.error(`Enter a valid data`);
     }
   };
-  console.log({ data });
 
   return (
     <form autoComplete="false">

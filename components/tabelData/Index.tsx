@@ -18,7 +18,6 @@ const TabelData = (props: Props) => {
   function openModal() {
     setIsOpen(true);
   }
-  console.log(details);
   return (
     <>
       <CreateNewMonthModal isOpen={isOpen} closeModal={closeModal} />

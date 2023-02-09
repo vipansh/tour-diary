@@ -44,7 +44,6 @@ const useFormValidation = () => {
   const updateError = (error: { [key: string]: string }) => {
     setErrors(error);
   };
-  console.log({ errors });
   return {
     errors,
     updateError,

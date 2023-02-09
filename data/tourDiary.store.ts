@@ -34,7 +34,6 @@ const defaultDateviseData: OneDayDetailsProps[] = [
 ];
 
 const localStorageData = getLocalStorageItem(STORAGE_KEYS.MONTH_DATA_LIST);
-console.log({ localStorageData });
 const defaultState: TourDiaryDetailsState = {
   details: JSON.parse(localStorageData || "[]"),
 };
@@ -43,8 +42,6 @@ export const useTourDiaryDetails = create<TourDiaryDetailsStore>((set) => ({
   ...defaultState,
 
   addMonth: (value: string) => {
-    console.log("create a new file");
-
     set((state) => {
       const newState: OneMonthDetiailsProp[] = [
         ...state.details,

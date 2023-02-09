@@ -35,7 +35,6 @@ export default function CreateNewMonthModal({
     for (const prop of details) {
       // Check if the monthName property is defined in the prop object
       // and if the value of monthName is equal to the newMonth string
-      console.log(prop, prop.monthName, newMonth);
       if (prop.monthName !== undefined && prop.monthName === newMonth) {
         return true;
       }
@@ -44,7 +43,6 @@ export default function CreateNewMonthModal({
   }
 
   const creatNewFile = () => {
-    console.log("create a new file");
     const value = (inputRef.current as HTMLInputElement).value;
     if (value) {
       if (details) {
@@ -70,7 +68,6 @@ export default function CreateNewMonthModal({
       }
     } else {
       notify();
-      console.log(value);
     }
   };
 

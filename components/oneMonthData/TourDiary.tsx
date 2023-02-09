@@ -11,6 +11,7 @@ type Props = {
 };
 
 const TourDiary = ({ openModal }: Props) => {
+  const [setshowDeleteButton, setsetshowDeleteButton] = useState(true);
   const { details } = useTourDiaryDetails();
   const router = useRouter();
   const { monthName } = router.query as { monthName: string };
@@ -18,7 +19,6 @@ const TourDiary = ({ openModal }: Props) => {
   const thisMontDetails = details.find(
     (detail) => detail.monthName === monthName
   );
-  console.log({ thisMontDetails });
 
   const calculateTotalFair = () => {
     let totalFairForBus = 0;
@@ -44,15 +44,25 @@ const TourDiary = ({ openModal }: Props) => {
   };
 
   const totalFair = useMemo(calculateTotalFair, [thisMontDetails]);
-  console.log({ totalFair });
 
   const ref = React.createRef<HTMLDivElement>();
 
   const componentRef = useRef<HTMLDivElement>(null);
+
+  const removeDeleteIcon = () => {
+    console.log("remove removeDeleteIcon");
+    setsetshowDeleteButton(false);
+  };
+  const addDeleteIcon = () => {
+    setsetshowDeleteButton(true);
+  };
+
   const handlePrint = useReactToPrint({
     content: () => componentRef.current,
     copyStyles: true,
     documentTitle: `${monthName} TourDiary`,
+    onBeforePrint: removeDeleteIcon,
+    onAfterPrint: addDeleteIcon,
   });
 
   return (
@@ -92,7 +102,7 @@ const TourDiary = ({ openModal }: Props) => {
                   Create New line
                 </button>
               </div>
-              <div className="overflow-hidden " ref={componentRef}>
+              <div className="overflow-hidden  " ref={componentRef}>
                 <div className="m-4">
                   <div
                     style={{
@@ -151,16 +161,7 @@ const TourDiary = ({ openModal }: Props) => {
                               ? 0
                               : +detail.distanceByBus) >=
                           8;
-                        console.log({
-                          addDaily,
-                          onFoot: detail.distanceOnFoot,
-                          byBus: detail.distanceByBus,
-                          total:
-                            (!detail.distanceOnFoot
-                              ? 0
-                              : detail.distanceOnFoot) +
-                            (!detail.distanceByBus ? 0 : detail.distanceByBus),
-                        });
+
                         return (
                           <Fragment key={index}>
                             <tr className="border-b mt-1 ">
@@ -217,7 +218,12 @@ const TourDiary = ({ openModal }: Props) => {
                               <td className="border-r p-1">
                                 {detail.distanceByBus}/{detail.distanceOnFoot}
                               </td>
-                              <td className="border-r p-1">{detail.note}</td>
+                              <td className="border-r p-1">
+                                {detail.note}
+                                {setshowDeleteButton && (
+                                  <button>delete row</button>
+                                )}
+                              </td>
                             </tr>
                           </Fragment>
                         );

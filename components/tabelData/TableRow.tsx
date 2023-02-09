@@ -9,7 +9,6 @@ type Props = {
 };
 
 const TableRow = ({ data }: Props) => {
-  console.log(data);
   return (
     <tr className="focus:outline-none">
       <td className="pt-6">

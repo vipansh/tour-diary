@@ -18,7 +18,6 @@ const TR7 = ({ openModal }: Props) => {
   const thisMontDetails = details.find(
     (detail) => detail.monthName === monthName
   );
-  console.log({ thisMontDetails });
 
   const calculateTotalFair = () => {
     let totalFairForBus = 0;
@@ -44,7 +43,6 @@ const TR7 = ({ openModal }: Props) => {
   };
 
   const totalFair = useMemo(calculateTotalFair, [thisMontDetails]);
-  console.log({ totalFair });
 
   const ref = React.createRef<HTMLDivElement>();
 
@@ -196,14 +194,7 @@ const TR7 = ({ openModal }: Props) => {
                         (!detail.distanceOnFoot ? 0 : +detail.distanceOnFoot) +
                           (!detail.distanceByBus ? 0 : +detail.distanceByBus) >=
                         8;
-                      console.log({
-                        addDaily,
-                        onFoot: detail.distanceOnFoot,
-                        byBus: detail.distanceByBus,
-                        total:
-                          (!detail.distanceOnFoot ? 0 : detail.distanceOnFoot) +
-                          (!detail.distanceByBus ? 0 : detail.distanceByBus),
-                      });
+
                       return (
                         <Fragment key={index}>
                           <tr className="border-b mt-1 ">
