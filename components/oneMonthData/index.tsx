@@ -17,7 +17,7 @@ const OneMonthData = (props: Props) => {
   const closeModal = () => {
     setOpenAddModal(false);
   };
-  console.log({ showTourDiary });
+
   return (
     <div className="mx-auto shadow-md bg-gray-900 text-white h-full min-h-screen py-8">
       <FormModal openAddModal={openAddModal} closeModal={closeModal} />
