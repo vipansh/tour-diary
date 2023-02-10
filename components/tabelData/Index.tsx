@@ -29,12 +29,10 @@ const TabelData = (props: Props) => {
                 Months List
               </p>
               <button
-                className="focus:outline-none focus:ring-2 focus:ring-indigo-700 focus:bg-indigo-50 dark:focus:bg-indigo-500 flex cursor-pointer items-center justify-center px-3 py-2.5 border rounded border-gray-100 dark:border-gray-800 "
+                className="focus:outline-none focus:ring-2 ring-indigo-700 bg-indigo-400  flex cursor-pointer items-center justify-center px-3 py-2.5 border rounded border-gray-100 dark:border-gray-800 "
                 onClick={openModal}
               >
-                <p className="focus:outline-none text-xs md:text-sm leading-none text-gray-600 dark:text-gray-200 ">
-                  Add new month
-                </p>
+                Add new month
               </button>
             </div>
             <div className="px-6 pt-6 overflow-x-auto">
