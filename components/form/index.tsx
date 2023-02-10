@@ -2,6 +2,7 @@ import { useRouter } from "next/router";
 import React, { useState } from "react";
 import { toast } from "react-toastify";
 import { OneDayDetailsProps, useTourDiaryDetails } from "../../data";
+import { record } from "../../data/oldRecord";
 import {
   addLocalStorageItem,
   getLocalStorageItem,
@@ -39,9 +40,9 @@ const Form = ({ closeModal }: Props) => {
 
   const localStorageDatabase = getLocalStorageItem(STORAGE_KEYS.DATABASE);
   const database: { [key: string]: OneDayDetailsProps } = localStorageDatabase
-    ? JSON.parse(localStorageDatabase)
-    : [];
-
+    ? { ...record, ...JSON.parse(localStorageDatabase) }
+    : {};
+  console.log({ database });
   const handleDateChange = (event: React.ChangeEvent<HTMLInputElement>) => {
     const date = new Date(event.target.value);
 

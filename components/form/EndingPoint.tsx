@@ -2,6 +2,7 @@ import { Fragment, useState } from "react";
 import { Combobox, Transition } from "@headlessui/react";
 import { getLocalStorageItem, STORAGE_KEYS } from "../../utils/localStorage";
 import { OneDayDetailsProps } from "../../data";
+import { record } from "../../data/oldRecord";
 // import { CheckIcon, ChevronUpDownIcon } from "@heroicons/react/20/solid";
 
 const people: { id: number; name: string }[] = [
@@ -37,7 +38,7 @@ export default function EndingPoint({
   const [query, setQuery] = useState("");
   const localStorageDatabase = getLocalStorageItem(STORAGE_KEYS.DATABASE);
   const database: { [key: string]: OneDayDetailsProps } = localStorageDatabase
-    ? JSON.parse(localStorageDatabase)
+    ? { ...record, ...JSON.parse(localStorageDatabase) }
     : [];
   const listOfEndPoints = convertJSONtoArray(database);
 
