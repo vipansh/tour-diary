@@ -1,6 +1,5 @@
 import { useRouter } from "next/router";
-import React, { useMemo, useRef } from "react";
-import { useTourDiaryDetails } from "../../data";
+import React, { useRef } from "react";
 
 import { useReactToPrint } from "react-to-print";
 import TourDiary from "../shared/tourDiary/TourDiary";
@@ -10,41 +9,8 @@ type Props = {
 };
 
 const TourDiaryContainer = ({ openModal }: Props) => {
-  const { details } = useTourDiaryDetails();
   const router = useRouter();
   const { monthName } = router.query as { monthName: string };
-  console.log(details);
-  const thisMontDetails = details.find(
-    (detail) => detail.monthName === monthName
-  );
-
-  const calculateTotalFair = () => {
-    let totalFairForBus = 0;
-    let totalFairOnFoot = 0;
-    let totalDaily = 0;
-    thisMontDetails?.data?.forEach((detail) => {
-      totalFairForBus += detail.distanceByBus
-        ? Math.floor(detail.distanceByBus * 2.2)
-        : 0;
-      totalFairOnFoot += detail.distanceOnFoot ? detail.distanceOnFoot * 1 : 0;
-      totalDaily +=
-        (!detail.distanceOnFoot ? 0 : +detail.distanceOnFoot) +
-          (!detail.distanceByBus ? 0 : +detail.distanceByBus) >=
-        8
-          ? 1
-          : 0;
-    });
-    return {
-      totalFairForBus: 2 * totalFairForBus,
-      totalFairOnFoot: 2 * totalFairOnFoot,
-      totalDaily: totalDaily * 50,
-    };
-  };
-
-  const totalFair = useMemo(calculateTotalFair, [thisMontDetails]);
-
-  const ref = React.createRef<HTMLDivElement>();
-
   const componentRef = useRef<HTMLDivElement>(null);
 
   const handlePrint = useReactToPrint({

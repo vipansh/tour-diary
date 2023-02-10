@@ -2,7 +2,7 @@ import React from "react";
 
 const Header = () => {
   return (
-    <section className="bg-gray-900 text-white">
+    <section className="bg-gray-900 text-white pt-8">
       <div className="mx-auto px-4 py-2 lg:flex lg:items-center">
         <div className="mx-auto max-w-3xl text-center">
           <h1 className="bg-gradient-to-r from-green-300 via-blue-500 to-purple-600 bg-clip-text text-3xl font-extrabold text-transparent sm:text-5xl">
