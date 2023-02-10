@@ -39,7 +39,7 @@ export default function EndingPoint({
   const localStorageDatabase = getLocalStorageItem(STORAGE_KEYS.DATABASE);
   const database: { [key: string]: OneDayDetailsProps } = localStorageDatabase
     ? { ...record, ...JSON.parse(localStorageDatabase) }
-    : [];
+    : { ...record };
   const listOfEndPoints = convertJSONtoArray(database);
 
   const filteredPeople =
