@@ -245,9 +245,11 @@ const TR7 = ({ openModal }: Props) => {
                             <td rowSpan={2} className="border-r p-1">
                               {(
                                 2 *
-                                (Math.floor(detail.distanceByBus || 0 * 2.2) +
-                                  Math.floor(detail.distanceOnFoot || 0 * 1) +
-                                  (addDaily ? 50 : 0))
+                                  Math.floor(
+                                    (detail.distanceByBus || 0) * 2.2
+                                  ) +
+                                Math.floor((detail.distanceOnFoot || 0) * 1) +
+                                (addDaily ? 50 : 0)
                               ).toFixed(2)}
                             </td>
                           </tr>
