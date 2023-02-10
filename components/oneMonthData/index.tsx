@@ -19,7 +19,7 @@ const OneMonthData = (props: Props) => {
   };
 
   return (
-    <div className="mx-auto shadow-md bg-gray-900 text-white h-full min-h-screen py-8">
+    <div className="mx-auto shadow-md bg-gray-900 text-white ">
       <FormModal openAddModal={openAddModal} closeModal={closeModal} />
       <Navbar
         selectedIndex={showTourDiary ? 0 : 1}
@@ -27,7 +27,7 @@ const OneMonthData = (props: Props) => {
           setShowTourDiary(!showTourDiary);
         }}
       />
-      <div className="bg-white text-gray-900  w-3/4 mx-auto rounded-lg min-h-screen">
+      <div className="bg-white text-gray-900 rounded-lg min-h-screen mx-auto flex max-w-7xl  p-1 pt-4">
         {showTourDiary ? (
           <TourDiary openModal={openModal} />
         ) : (

@@ -95,7 +95,7 @@ const DeleteButton = ({ monthName, handelDeleteAction }: Props) => {
                     </button>
                     <button
                       type="button"
-                      className="inline-flex justify-center rounded-md border border-transparent bg-red-100 px-4 py-2 text-sm font-medium text-red-900 hover:bg-red-200 focus:outline-none focus-visible:ring-2 focus-visible:ring-red-500 focus-visible:ring-offset-2"
+                      className="flex rounded border border-red-600 px-4 py-2 text-sm font-medium text-red-600 hover:bg-red-600 hover:text-white focus:outline-none focus:ring active:bg-red-500"
                       onClick={deleteMonthData}
                     >
                       Delete
@@ -109,7 +109,7 @@ const DeleteButton = ({ monthName, handelDeleteAction }: Props) => {
       </Transition>
       <div>
         <button
-          className="bg-red-400 text-white group flex w-full items-center rounded-md px-2 py-2 text-sm"
+          className=" flex rounded border border-red-600 px-2 py-2 text-sm font-medium text-red-600 hover:bg-red-600 hover:text-white "
           onClick={openModal}
         >
           <DeleteActiveIcon
