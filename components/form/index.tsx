@@ -127,6 +127,7 @@ const Form = ({ closeModal }: Props) => {
               value={data.date || ""}
               onChange={handleDateChange}
             />
+            <div className="text-xs text-red-700 ml-2">{errors?.date}</div>
           </div>
         </FormSubContainer>
         <div className="flex flex-col md:flex-row flex-1">
@@ -259,6 +260,7 @@ const Form = ({ closeModal }: Props) => {
                 setData({ ...data, [e.target.name]: e.target.value });
               }}
             />
+            <div className="text-xs text-red-700 ml-2">{errors?.note}</div>
           </div>
         </FormSubContainer>
 
