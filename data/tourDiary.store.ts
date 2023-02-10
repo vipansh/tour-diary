@@ -83,11 +83,18 @@ export const useTourDiaryDetails = create<TourDiaryDetailsStore>((set) => ({
         if (detail.monthName === monthName) {
           return {
             ...detail,
-            data: detail.data ? [...detail.data, value] : [value],
+            data: detail.data
+              ? [...detail.data, value].sort((a, b) => {
+                  const dateA = new Date(a.date as string);
+                  const dateB = new Date(b.date as string);
+                  return dateA.getTime() - dateB.getTime();
+                })
+              : [value],
           };
         }
         return detail;
       });
+
       const newValue = {
         ...state,
         details: newDetails,
