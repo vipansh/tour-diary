@@ -41,7 +41,7 @@ const Form = ({ closeModal }: Props) => {
   const localStorageDatabase = getLocalStorageItem(STORAGE_KEYS.DATABASE);
   const database: { [key: string]: OneDayDetailsProps } = localStorageDatabase
     ? { ...record, ...JSON.parse(localStorageDatabase) }
-    : {};
+    : record;
   console.log({ database });
   const handleDateChange = (event: React.ChangeEvent<HTMLInputElement>) => {
     const date = new Date(event.target.value);
