@@ -33,21 +33,14 @@ const TourDiary = ({}: Props) => {
   };
 
   return (
-    <div className=" min-w-full sm:px-6 lg:px-8">
+    <div className="min-w-full sm:px-6 lg:px-8">
       <div className="m-1">
-        <div
-          style={{
-            fontSize: "0.5rem",
-          }}
-          className=""
-        >
-          <div>
-            Tour Diary in r/o Sh./Smt. Meenakshi Circle Supervisor Dhulara,
-            Project Chowari for the m/o {monthName}
-          </div>
+        <div>
+          Tour Diary in r/o Sh./Smt. Meenakshi Circle Supervisor Dhulara,
+          Project Chowari for the m/o {monthName}
         </div>
         <table
-          className="table-auto w-full  border text-start  text-gray-900 font-light   border-r "
+          className="table-auto w-full  border text-start  text-gray-900 font-light border-r "
           style={{
             fontSize: "0.5rem",
           }}

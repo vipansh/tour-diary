@@ -5,6 +5,7 @@ import { useTourDiaryDetails } from "../../data";
 import { convert24To12 } from "../../utils/time";
 
 import { useReactToPrint } from "react-to-print";
+import Tr7Row from "../shared/tr7/Tr7Row";
 
 type Props = {
   openModal: () => void;
@@ -88,13 +89,13 @@ const TR7 = ({ openModal }: Props) => {
       </div>
 
       <div className="overflow-hidden" ref={tr7componentRef}>
-        <div className="m-4">
-          <div
-            style={{
-              fontSize: "0.5rem",
-            }}
-            className=""
-          >
+        <div
+          className="m-4"
+          style={{
+            fontSize: "0.5rem",
+          }}
+        >
+          <div>
             <div> H.P.T.R.- 7 </div>
             <div> TRAVELLING EXPENSES CLAIM FORM </div>
             <div>1.Establishment- CDPO Chowari Month- {monthName}</div>
@@ -102,12 +103,7 @@ const TR7 = ({ openModal }: Props) => {
             <div>3. Basic Pay- BP- 10300+ GP- 3200 Head Qtr.- Dhulara</div>
             <div>4. Purpose of Journey- List of Tour Programme attached</div>
           </div>
-          <table
-            className="table-auto min-w-full border text-start  text-gray-900 font-light px-6 py-4  border-r"
-            style={{
-              fontSize: "0.5rem",
-            }}
-          >
+          <table className="table-auto min-w-full border text-start  text-gray-900 font-light px-6 py-4  border-r">
             <thead className="border-b">
               <tr className="border-b p-1">
                 <th colSpan={2} scope="col" className="border-r">
@@ -183,93 +179,7 @@ const TR7 = ({ openModal }: Props) => {
             </thead>
             <tbody>
               {thisMontDetails?.data?.map((detail, index) => {
-                const addDaily =
-                  (!detail.distanceOnFoot ? 0 : +detail.distanceOnFoot) +
-                    (!detail.distanceByBus ? 0 : +detail.distanceByBus) >=
-                  8;
-
-                return (
-                  <Fragment key={index}>
-                    <tr className="border-b mt-1 ">
-                      <td className="border-r p-1">
-                        {detail.startingPoint?.name}
-                      </td>
-                      <td className="border-r p-1">
-                        {detail.date &&
-                          format(new Date(detail.date), "dd-MM-yyyy")}
-                        <br />
-                        {convert24To12(detail.startingPoint?.startTime)}
-                      </td>
-                      <td className="border-r p-1">{detail.endPoint?.name}</td>
-                      <td className="border-r p-1">
-                        {detail.date &&
-                          format(new Date(detail.date), "dd-MM-yyyy")}
-                        <br />
-                        {convert24To12(detail.startingPoint?.endTime)}
-                      </td>
-
-                      <td className="border-r p-1">{"By Bus/On foot"}</td>
-                      <td className="border-r p-1">
-                        {detail.distanceByBus}/{detail.distanceOnFoot}
-                      </td>
-                      <td className="border-r p-1">
-                        {detail.distanceByBus &&
-                          Math.floor(detail.distanceByBus * 2.2).toFixed(2)}
-                      </td>
-                      <td className="border-r p-1">
-                        {detail.distanceOnFoot &&
-                          Math.floor(detail.distanceOnFoot * 1).toFixed(2)}
-                      </td>
-                      <td rowSpan={2} className="border-r p-1">
-                        {addDaily ? "  70%" : "-"}
-                      </td>
-                      <td rowSpan={2} className="border-r p-1">
-                        {addDaily ? "72/-" : "-"}
-                      </td>
-                      <td rowSpan={2} className="border-r p-1">
-                        {addDaily ? "50.00" : "-"}
-                      </td>
-                      <td rowSpan={2} className="border-r p-1">
-                        {(
-                          2 * Math.floor((detail.distanceByBus || 0) * 2.2) +
-                          Math.floor((detail.distanceOnFoot || 0) * 1) +
-                          (addDaily ? 50 : 0)
-                        ).toFixed(2)}
-                      </td>
-                    </tr>
-                    <tr className="border-b border-gray-400 ">
-                      <td className="border-r p-1">{detail.endPoint?.name}</td>
-                      <td className="border-r p-1">
-                        {detail.date &&
-                          format(new Date(detail.date), "dd-MM-yyyy")}
-                        <br />
-                        {convert24To12(detail.startingPoint?.startTime)}
-                      </td>
-                      <td className="border-r p-1">
-                        {detail.startingPoint?.name}
-                      </td>
-                      <td className="border-r p-1">
-                        {detail.date &&
-                          format(new Date(detail.date), "dd-MM-yyyy")}
-                        <br />
-                        {convert24To12(detail.startingPoint?.endTime)}
-                      </td>
-
-                      <td className="border-r p-1">{"By Bus/On foot"}</td>
-                      <td className="border-r p-1">
-                        {detail.distanceByBus}/{detail.distanceOnFoot}
-                      </td>
-                      <td className="border-r p-1">
-                        {detail.distanceByBus &&
-                          Math.floor(detail.distanceByBus * 2.2).toFixed(2)}
-                      </td>
-                      <td className="border-r p-1">
-                        {detail.distanceOnFoot &&
-                          Math.floor(detail.distanceOnFoot * 1).toFixed(2)}
-                      </td>
-                    </tr>
-                  </Fragment>
-                );
+                return <Tr7Row key={index} detail={detail} />;
               })}
               <tr>
                 <td colSpan={6}>Grand Total</td>

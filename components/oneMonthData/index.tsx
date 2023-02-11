@@ -27,7 +27,7 @@ const OneMonthData = (props: Props) => {
           setShowTourDiary(!showTourDiary);
         }}
       />
-      <div className="bg-white text-gray-900 rounded-lg min-h-screen mx-auto flex max-w-7xl  p-1 pt-4">
+      <div className="bg-white text-gray-900 rounded-lg min-h-screen mx-auto flex max-w-7xl  p-1 pt-4 ">
         {showTourDiary ? (
           <TourDiary openModal={openModal} />
         ) : (

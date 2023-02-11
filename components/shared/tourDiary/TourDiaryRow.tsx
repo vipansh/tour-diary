@@ -67,13 +67,13 @@ const TourDiaryRow = ({ detail, monthName }: TourDiaryRowProps) => {
         <td className="border-r p-1">
           {detail.date && format(new Date(detail.date), "dd-MM-yyyy")}
           <br />
-          {convert24To12(detail.startingPoint?.startTime)}
+          {convert24To12(detail.endPoint?.startTime)}
         </td>
         <td className="border-r p-1">{detail.startingPoint?.name}</td>
         <td className="border-r p-1">
           {detail.date && format(new Date(detail.date), "dd-MM-yyyy")}
           <br />
-          {convert24To12(detail.startingPoint?.endTime)}
+          {convert24To12(detail.endPoint?.endTime)}
         </td>
 
         <td className="border-r p-1">{"By Bus/On foot"}</td>
