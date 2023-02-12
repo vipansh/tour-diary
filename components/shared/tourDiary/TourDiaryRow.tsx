@@ -44,7 +44,7 @@ const TourDiaryRow = ({ detail, monthName }: TourDiaryRowProps) => {
         <td className="border-r p-1">
           {detail.distanceByBus}/{detail.distanceOnFoot}
         </td>
-        <td className="border-r p-1 relative">
+        <td className="border-r p-1 relative" rowSpan={2}>
           {detail.note}
           {setshowDeleteButton && (
             <div className="absolute h-14 -right-2 -top-0">
@@ -80,7 +80,6 @@ const TourDiaryRow = ({ detail, monthName }: TourDiaryRowProps) => {
         <td className="border-r p-1">
           {detail.distanceByBus}/{detail.distanceOnFoot}
         </td>
-        <td className="border-r p-1">{detail.note}</td>
       </tr>
     </Fragment>
   );
