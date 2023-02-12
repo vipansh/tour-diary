@@ -40,6 +40,9 @@ const TR7 = ({ openModal }: Props) => {
       if (detail.isCustom) {
         totalStayDaily += detail.totalDays || 0;
         totalDaily += 1;
+        totalFairForBus += detail.startingPoint?.distanceByBus
+          ? Math.floor(detail.startingPoint?.distanceByBus * 2.2)
+          : 0;
       }
     });
     return {
