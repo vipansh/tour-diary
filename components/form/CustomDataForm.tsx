@@ -36,44 +36,25 @@ const CustomDataForm = ({ closeModal }: Props) => {
 
   const listOfEndPoints = convertJSONtoArray(database);
 
-  const filteredPeople =
-    query === ""
-      ? listOfEndPoints
-      : listOfEndPoints.filter((person) =>
-          person.name
-            .toLowerCase()
-            .replace(/\s+/g, "")
-            .includes(query.toLowerCase().replace(/\s+/g, ""))
-        );
-
   const heandelEndPointName = (value: string) => {
     if (database[value]) {
       const prefilledValues = database[value];
       prefilledValues.date = data.date;
-      setData(prefilledValues);
+      setData(JSON.parse(JSON.stringify(prefilledValues)));
       toast.success("Data autofilled");
       return;
     }
+    // data.startingPoint?.ending?.name
     setData({
       ...data,
-      endPoint: {
-        ...data.endPoint,
-        name: value,
+      startingPoint: {
+        ...data.startingPoint,
+        ending: {
+          ...data.startingPoint?.ending,
+          name: value,
+        },
       },
     });
-  };
-
-  const handleDateChange = (event: React.ChangeEvent<HTMLInputElement>) => {
-    const date = new Date(event.target.value);
-
-    const [month, year] = monthName.split("-");
-    const monthNum = new Date(`${month} 01, ${year}`).getMonth();
-    const yearNum = new Date(`${month} 01, ${year}`).getFullYear();
-    if (date.getFullYear() == yearNum && date.getMonth() == monthNum) {
-      //   handelChange(event);
-    } else {
-      toast.info("Can't change month");
-    }
   };
 
   const createData = (e: React.MouseEvent<HTMLButtonElement, MouseEvent>) => {
@@ -112,7 +93,7 @@ const CustomDataForm = ({ closeModal }: Props) => {
       return newValue;
     });
   };
-  console.log({ data: data.startingPoint?.ending?.dateTime });
+  console.log({ data });
   return (
     <form autoComplete="false">
       <div>
