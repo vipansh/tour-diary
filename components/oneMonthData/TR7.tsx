@@ -25,6 +25,7 @@ const TR7 = ({ openModal }: Props) => {
     let totalFairForBus = 0;
     let totalFairOnFoot = 0;
     let totalDaily = 0;
+    let totalStayDaily = 0;
     thisMontDetails?.data?.forEach((detail) => {
       totalFairForBus += detail.distanceByBus
         ? Math.floor(detail.distanceByBus * 2.2)
@@ -36,11 +37,15 @@ const TR7 = ({ openModal }: Props) => {
         8
           ? 1
           : 0;
+      if (detail.isCustom) {
+        totalStayDaily += detail.totalDays || 0;
+        totalDaily += 1;
+      }
     });
     return {
       totalFairForBus: 2 * totalFairForBus,
       totalFairOnFoot: 2 * totalFairOnFoot,
-      totalDaily: totalDaily * 50,
+      totalDaily: totalDaily * 50 + totalStayDaily * 160,
     };
   };
 

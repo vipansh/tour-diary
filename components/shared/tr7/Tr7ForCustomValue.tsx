@@ -54,11 +54,12 @@ const Tr7ForCustomValue = ({ detail }: Props) => {
         <td className="border-r p-1">
           {detail?.totalDays && Math.floor(160 * detail?.totalDays).toFixed(2)}
         </td>
-        <td rowSpan={2} className="border-r p-1">
+        <td className="border-r p-1" rowSpan={2}>
           {(
             2 * Math.floor((detail.startingPoint?.distanceByBus || 0) * 2.2) +
             Math.floor((detail.startingPoint?.distanceOnFoot || 0) * 1) +
-            (detail?.totalDays ? detail?.totalDays * 160 : 0)
+            (detail?.totalDays ? detail?.totalDays * 160 : 0) +
+            50
           ).toFixed(2)}
         </td>
       </tr>
@@ -89,6 +90,9 @@ const Tr7ForCustomValue = ({ detail }: Props) => {
           {detail.startingPoint?.distanceOnFoot &&
             Math.floor(detail.startingPoint?.distanceOnFoot * 1).toFixed(2)}
         </td>
+        <td className="border-r p-1">70%</td>
+        <td className="border-r p-1">72/-</td>
+        <td className="border-r p-1">50.00</td>
       </tr>
     </Fragment>
   );
