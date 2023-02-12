@@ -25,7 +25,6 @@ const TourDiary = ({}: Props) => {
   const componentRef = useRef<HTMLDivElement>(null);
 
   const removeDeleteIcon = () => {
-    console.log("remove removeDeleteIcon");
     setsetshowDeleteButton(false);
   };
   const addDeleteIcon = () => {

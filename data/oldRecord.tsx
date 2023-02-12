@@ -382,25 +382,32 @@ export const record = {
 export const specialJourneyRecord = {
   Dalhousie: {
     startingPoint: {
-      startTime: "14:00", // "8?:00 AM"string,
-      endTime: "17:30", // "10?:00 AM"string,
-      date: "06-04-22",
-      startingPoint: "Dhulara",
-      endPoint: "Dalhousie",
+      starting: {
+        name: "Dhulara",
+        dateTime: "2022-06-04T17:30",
+      },
+      ending: {
+        name: "Dalhousie",
+        dateTime: "2022-06-04T14:00",
+      },
       distanceByBus: 77, //3000,
       distanceOnFoot: 0, //10,
-      note: "To submit summons at CJM Court Dalhousie",
     },
     endPoint: {
-      startTime: "16:00", // "8?:00 AM"string,
-      endTime: "19:30", // "10?:00 AM"string,
-      date: "07-04-22",
-      startingPoint: "Dhulara",
-      endPoint: "Dalhousie",
+      starting: {
+        name: "Dalhousie",
+        dateTime: "2022-06-04T16:00",
+      },
+      ending: {
+        name: "Dhulara",
+        dateTime: "2022-06-04T19:30",
+      },
       distanceByBus: 77, //3000,
       distanceOnFoot: 0, //10,
-      note: "To submit summons at CJM Court Dalhousie",
     },
+    note: "To submit summons at CJM Court Dalhousie",
     totalDays: 1,
+    isCustom: true,
   },
 };
+// yyyy-MM-ddThh:mm

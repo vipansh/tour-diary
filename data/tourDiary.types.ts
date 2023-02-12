@@ -3,31 +3,40 @@ export type OneDayDetailsProps = {
   startingPoint?: {
     startTime?: string; // "8?:00 AM";
     endTime?: string; // "10?:00 AM";
-    date?: string;
     name?: string;
-    startingPoint?: string;
-    endPoint?: string;
+    starting?: {
+      name?: string;
+      dateTime?: string;
+    };
+    ending?: {
+      name?: string;
+      dateTime?: string;
+    };
     distance?: string;
     distanceByBus?: number; //3000,
     distanceOnFoot?: number; //10,
-    note?: string;
   };
   endPoint?: {
     startTime?: string; // "8?:00 AM";
     endTime?: string; // "10?:00 AM";
-    date?: string;
     name?: string;
-    startingPoint?: string;
-    endPoint?: string;
+    starting?: {
+      name?: string;
+      dateTime?: string;
+    };
+    ending?: {
+      name?: string;
+      dateTime?: string;
+    };
     distance?: string;
     distanceByBus?: number; //3000,
     distanceOnFoot?: number; //10,
-    note?: string;
   };
+  distance?: string;
   distanceByBus?: number; //3000,
   distanceOnFoot?: number; //10,
   note?: string;
-  isCustom?: string;
+  isCustom?: boolean;
   totalDays?: number;
 };
 

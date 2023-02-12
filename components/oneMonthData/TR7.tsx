@@ -6,6 +6,7 @@ import { convert24To12 } from "../../utils/time";
 
 import { useReactToPrint } from "react-to-print";
 import Tr7Row from "../shared/tr7/Tr7Row";
+import Tr7ForCustomValue from "../shared/tr7/Tr7ForCustomValue";
 
 type Props = {
   openModal: () => void;
@@ -67,7 +68,7 @@ const TR7 = ({ openModal }: Props) => {
               xmlns="http://www.w3.org/2000/svg"
               fill="none"
               viewBox="0 0 24 24"
-              stroke-width="1.5"
+              strokeWidth="1.5"
               stroke="currentColor"
               className="w-6 h-6"
             >
@@ -179,6 +180,8 @@ const TR7 = ({ openModal }: Props) => {
             </thead>
             <tbody>
               {thisMontDetails?.data?.map((detail, index) => {
+                if (detail.isCustom)
+                  return <Tr7ForCustomValue key={index} detail={detail} />;
                 return <Tr7Row key={index} detail={detail} />;
               })}
               <tr>
