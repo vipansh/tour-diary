@@ -16,7 +16,7 @@ const Form = ({ closeModal }: Props) => {
       className="transition-height duration-500 ease-in-out overflow-auto"
       style={{
         transition: "height 1s",
-        height: showCustomForm ? "80vh" : "50vh",
+        height: showCustomForm ? "85vh" : "90vh",
       }}
     >
       <ToggleForm
