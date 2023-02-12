@@ -8,24 +8,16 @@ type Props = {
 };
 
 const Tr7ForCustomValue = ({ detail }: Props) => {
-  const addDaily =
-    (!detail.startingPoint?.distanceOnFoot
-      ? 0
-      : +detail.startingPoint?.distanceOnFoot) +
-      (!detail.startingPoint?.distanceByBus
-        ? 0
-        : +detail.startingPoint?.distanceByBus) >=
-    8;
-  console.log({ detail });
-
   return (
     <Fragment>
       <tr className="border-b mt-1 ">
         <td className="border-r p-1">{detail.startingPoint?.starting?.name}</td>
         <td className="border-r p-1">
-          {/* {detail.date && format(new Date(detail.date), "dd-MM-yyyy")} */}
-          <br />
-          {detail.startingPoint?.starting?.dateTime}
+          {detail.startingPoint?.starting?.dateTime && (
+            <SplitDateTime
+              dateTime={detail.startingPoint?.starting?.dateTime}
+            />
+          )}
         </td>
         <td className="border-r p-1">{detail.startingPoint?.ending?.name}</td>
         <td className="border-r p-1">
@@ -48,9 +40,7 @@ const Tr7ForCustomValue = ({ detail }: Props) => {
             Math.floor(detail.startingPoint?.distanceOnFoot * 1).toFixed(2)}
         </td>
         <td className="border-r p-1">{detail.totalDays} days</td>
-        <td className="border-r p-1">
-          {detail?.totalDays && 160 * detail?.totalDays}/-
-        </td>
+        <td className="border-r p-1">160/-</td>
         <td className="border-r p-1">
           {detail?.totalDays && Math.floor(160 * detail?.totalDays).toFixed(2)}
         </td>
@@ -64,17 +54,17 @@ const Tr7ForCustomValue = ({ detail }: Props) => {
         </td>
       </tr>
       <tr className="border-b border-gray-400 ">
-        <td className="border-r p-1">{detail.endPoint?.name}</td>
+        <td className="border-r p-1">{detail.endPoint?.starting?.name}</td>
         <td className="border-r p-1">
-          {detail.date && format(new Date(detail.date), "dd-MM-yyyy")}
-          <br />
-          {convert24To12(detail.startingPoint?.startTime)}
+          {detail.endPoint?.starting?.dateTime && (
+            <SplitDateTime dateTime={detail.endPoint?.starting?.dateTime} />
+          )}
         </td>
-        <td className="border-r p-1">{detail.startingPoint?.name}</td>
+        <td className="border-r p-1">{detail.endPoint?.ending?.name}</td>
         <td className="border-r p-1">
-          {detail.date && format(new Date(detail.date), "dd-MM-yyyy")}
-          <br />
-          {convert24To12(detail.startingPoint?.endTime)}
+          {detail.endPoint?.ending?.dateTime && (
+            <SplitDateTime dateTime={detail.endPoint?.ending?.dateTime} />
+          )}
         </td>
 
         <td className="border-r p-1">{"By Bus/On foot"}</td>
