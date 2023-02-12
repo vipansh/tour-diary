@@ -28,7 +28,7 @@ export type OneDayDetailsProps = {
   distanceOnFoot?: number; //10,
   note?: string;
   isCustom?: string;
-  totalDays?: string;
+  totalDays?: number;
 };
 
 export type OneMonthDetiailsProp = {

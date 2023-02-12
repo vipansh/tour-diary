@@ -8,7 +8,7 @@ import {
   getLocalStorageItem,
   STORAGE_KEYS,
 } from "../../utils/localStorage";
-import EndingPoint from "./EndingPoint";
+import EndingPoint, { convertJSONtoArray } from "./EndingPoint";
 import FormSubContainer from "./FormSubContainer";
 import useFormValidation from "./hook/useFormValidation";
 import ToggleForm from "./ToggleForm";
@@ -42,8 +42,9 @@ const NormalForm = ({ closeModal }: Props) => {
   const localStorageDatabase = getLocalStorageItem(STORAGE_KEYS.DATABASE);
   const database: { [key: string]: OneDayDetailsProps } = localStorageDatabase
     ? { ...record, ...JSON.parse(localStorageDatabase) }
-    : record;
-  console.log({ database });
+    : { ...record };
+  const listOfEndPoints = convertJSONtoArray(database);
+
   const handleDateChange = (event: React.ChangeEvent<HTMLInputElement>) => {
     const date = new Date(event.target.value);
 
@@ -138,6 +139,7 @@ const NormalForm = ({ closeModal }: Props) => {
               <EndingPoint
                 selectedValue={data.endPoint?.name || ""}
                 onChange={heandelEndPointName}
+                listOfEndPoints={listOfEndPoints}
               />
             </div>
             <div className="flex flex-row space-x-4">

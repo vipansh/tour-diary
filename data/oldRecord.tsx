@@ -378,3 +378,29 @@ export const record = {
     note: "To check AWC Center and back to Office.",
   },
 };
+
+export const specialJourneyRecord = {
+  Dalhousie: {
+    startingPoint: {
+      startTime: "14:00", // "8?:00 AM"string,
+      endTime: "17:30", // "10?:00 AM"string,
+      date: "06-04-22",
+      startingPoint: "Dhulara",
+      endPoint: "Dalhousie",
+      distanceByBus: 77, //3000,
+      distanceOnFoot: 0, //10,
+      note: "To submit summons at CJM Court Dalhousie",
+    },
+    endPoint: {
+      startTime: "16:00", // "8?:00 AM"string,
+      endTime: "19:30", // "10?:00 AM"string,
+      date: "07-04-22",
+      startingPoint: "Dhulara",
+      endPoint: "Dalhousie",
+      distanceByBus: 77, //3000,
+      distanceOnFoot: 0, //10,
+      note: "To submit summons at CJM Court Dalhousie",
+    },
+    totalDays: 1,
+  },
+};

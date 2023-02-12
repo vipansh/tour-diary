@@ -1,20 +1,7 @@
 import { Fragment, useState } from "react";
 import { Combobox, Transition } from "@headlessui/react";
-import { getLocalStorageItem, STORAGE_KEYS } from "../../utils/localStorage";
-import { OneDayDetailsProps } from "../../data";
-import { record } from "../../data/oldRecord";
-// import { CheckIcon, ChevronUpDownIcon } from "@heroicons/react/20/solid";
 
-const people: { id: number; name: string }[] = [
-  { id: 1, name: "Behi" },
-  { id: 2, name: "Balana" },
-  { id: 3, name: "Dhulara" },
-  { id: 4, name: "Tom Cook" },
-  { id: 5, name: "Tanya Fox" },
-  // { id: 6, name: "Hellen Schmidt" },
-];
-
-function convertJSONtoArray(
+export function convertJSONtoArray(
   json: Record<string, any>
 ): { id: number; name: string }[] {
   let id = 1;
@@ -29,18 +16,18 @@ function convertJSONtoArray(
 type EndingPointProp = {
   selectedValue: string;
   onChange: (value: string) => void;
+  listOfEndPoints: {
+    id: number;
+    name: string;
+  }[];
 };
 
 export default function EndingPoint({
   selectedValue,
   onChange,
+  listOfEndPoints,
 }: EndingPointProp) {
   const [query, setQuery] = useState("");
-  const localStorageDatabase = getLocalStorageItem(STORAGE_KEYS.DATABASE);
-  const database: { [key: string]: OneDayDetailsProps } = localStorageDatabase
-    ? { ...record, ...JSON.parse(localStorageDatabase) }
-    : { ...record };
-  const listOfEndPoints = convertJSONtoArray(database);
 
   const filteredPeople =
     query === ""
