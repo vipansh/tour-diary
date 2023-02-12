@@ -90,7 +90,7 @@ const Tr7ForCustomValue = ({ detail }: Props) => {
 
 export default Tr7ForCustomValue;
 
-const SplitDateTime = ({ dateTime }: { dateTime: string }) => {
+export const SplitDateTime = ({ dateTime }: { dateTime: string }) => {
   return (
     <Fragment>
       {dateTime && format(new Date(dateTime.split("T")[0]), "dd-MM-yyyy")}

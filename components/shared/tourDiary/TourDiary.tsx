@@ -6,6 +6,7 @@ import { useReactToPrint } from "react-to-print";
 import { useTourDiaryDetails } from "../../../data";
 import { convert24To12 } from "../../../utils/time";
 import DeleteButton from "../../tabelData/DeleteButton";
+import TourDiaryCustomRow from "./TourDiaryCustomRow";
 import TourDiaryRow from "./TourDiaryRow";
 
 type Props = {};
@@ -76,6 +77,14 @@ const TourDiary = ({}: Props) => {
           </thead>
           <tbody>
             {thisMontDetails?.data?.map((detail, index) => {
+              if (detail.isCustom)
+                return (
+                  <TourDiaryCustomRow
+                    key={index}
+                    detail={detail}
+                    monthName={monthName}
+                  />
+                );
               return (
                 <TourDiaryRow
                   key={index}
