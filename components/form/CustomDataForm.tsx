@@ -301,6 +301,19 @@ const CustomDataForm = ({ closeModal }: Props) => {
           </FormSubContainer>
         </div>
 
+        <FormSubContainer title={"Purpose of journey"}>
+          <textarea
+            placeholder="Note"
+            value={data.note || ""}
+            onChange={(e) => {
+              handleChange(["note"], e.target.value);
+            }}
+            rows={3}
+            className={`px-4 py-2 border focus:ring-gray-500 focus:border-gray-900 w-full sm:text-sm border-gray-300 rounded-md focus:outline-none text-gray-600 `}
+            name="note"
+          />
+        </FormSubContainer>
+
         {/* ----------------------old code------------------------ */}
         <div className="divide-y divide-gray-200">
           <div className="pt-4 flex items-center space-x-4 justify-end">
