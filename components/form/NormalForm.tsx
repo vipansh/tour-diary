@@ -276,7 +276,7 @@ const NormalForm = ({ closeModal }: Props) => {
                 e.preventDefault();
                 closeModal();
               }}
-              className="flex rounded border border-current px-4 py-2 text-sm font-medium text-red-600 transition hover:rotate-2 hover:scale-110 focus:outline-none focus:ring active:text-red-500"
+              className="flex rounded border border-current px-4 py-2 text-sm font-medium text-red-600 transition "
             >
               <svg
                 className="w-6 h-6 mr-3"
@@ -296,7 +296,7 @@ const NormalForm = ({ closeModal }: Props) => {
             </button>
             <button
               type="submit"
-              className="flex rounded bg-indigo-600 px-12 py-3 text-sm font-medium text-white transition hover:rotate-2 hover:scale-110 focus:outline-none focus:ring active:bg-indigo-500"
+              className="flex rounded bg-indigo-600 px-12 py-3 text-sm font-medium text-white transition "
               onClick={createData}
             >
               Create
