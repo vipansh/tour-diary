@@ -12,7 +12,7 @@ const Tr7Row = ({ detail }: Props) => {
     (!detail.distanceOnFoot ? 0 : +detail.distanceOnFoot) +
       (!detail.distanceByBus ? 0 : +detail.distanceByBus) >=
     8;
-
+  console.log({ detail });
   return (
     <Fragment>
       <tr className="border-b mt-1 ">
@@ -63,13 +63,13 @@ const Tr7Row = ({ detail }: Props) => {
         <td className="border-r p-1">
           {detail.date && format(new Date(detail.date), "dd-MM-yyyy")}
           <br />
-          {convert24To12(detail.startingPoint?.startTime)}
+          {convert24To12(detail.endPoint?.startTime)}
         </td>
         <td className="border-r p-1">{detail.startingPoint?.name}</td>
         <td className="border-r p-1">
           {detail.date && format(new Date(detail.date), "dd-MM-yyyy")}
           <br />
-          {convert24To12(detail.startingPoint?.endTime)}
+          {convert24To12(detail.endPoint?.endTime)}
         </td>
 
         <td className="border-r p-1">{"By Bus/On foot"}</td>
