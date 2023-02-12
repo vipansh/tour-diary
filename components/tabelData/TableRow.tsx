@@ -17,9 +17,7 @@ const TableRow = ({ data }: Props) => {
         <div className="flex items-center">
           <div className="pl-3">
             <div className="flex items-center text-sm leading-none">
-              <p className="font-semibold text-gray-800 dark:text-white ">
-                {data.monthName}
-              </p>
+              <p className="font-semibold text-white ">{data.monthName}</p>
             </div>
           </div>
         </div>

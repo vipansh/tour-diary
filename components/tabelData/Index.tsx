@@ -23,13 +23,13 @@ const TabelData = (props: Props) => {
       <CreateNewMonthModal isOpen={isOpen} closeModal={closeModal} />
       <div className="shadow-md bg-gray-900 text-white h-screen py-8">
         <div className="w-full max-w-2xl px-4 mx-auto">
-          <div className="rounded-lg border pb-6 border-gray-200 dark:border-gray-700 ">
-            <div className="flex items-center border-b border-gray-200 dark:border-gray-700  justify-between px-6 py-3">
-              <p className="focus:outline-none text-sm lg:text-xl font-semibold leading-tight text-gray-800 dark:text-white ">
+          <div className="rounded-lg border pb-6 border-gray-700 ">
+            <div className="flex items-center border-b border-gray-700  justify-between px-6 py-3">
+              <p className="focus:outline-none text-sm lg:text-xl font-semibold leading-tight text-white ">
                 Months List
               </p>
               <button
-                className="focus:outline-none focus:ring-2 ring-indigo-700 bg-indigo-400  flex cursor-pointer items-center justify-center px-3 py-2.5 border rounded border-gray-100 dark:border-gray-800 "
+                className="focus:outline-none focus:ring-2 ring-indigo-700 bg-indigo-400  flex cursor-pointer items-center justify-center px-3 py-2.5 border rounded border-gray-100 "
                 onClick={openModal}
               >
                 Add new month
