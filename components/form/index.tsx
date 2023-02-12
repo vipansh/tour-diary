@@ -24,9 +24,9 @@ const Form = ({ closeModal }: Props) => {
         toggle={() => setShowCustomForm(!showCustomForm)}
       />
       {showCustomForm ? (
-        <NormalForm closeModal={closeModal} />
-      ) : (
         <CustomDataForm closeModal={closeModal} />
+      ) : (
+        <NormalForm closeModal={closeModal} />
       )}
     </div>
   );
