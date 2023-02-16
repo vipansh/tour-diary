@@ -99,9 +99,9 @@ const TR7 = ({ openModal }: Props) => {
 
       <div className="overflow-hidden" ref={tr7componentRef}>
         <div
-          className="m-4"
+          className="m-4 font-bold"
           style={{
-            fontSize: "0.5rem",
+            fontSize: "0.6rem",
           }}
         >
           <div>
@@ -112,7 +112,7 @@ const TR7 = ({ openModal }: Props) => {
             <div>3.Basic Pay- BP- 21,360/- Head Qtr.- Dhulara</div>
             <div>4.Purpose of Journey- List of Tour Programme attached</div>
           </div>
-          <table className="table-auto min-w-full border text-start  text-gray-900 font-light px-6 py-4  border-r">
+          <table className="table-auto min-w-full border text-start  text-gray-900  px-6 py-4  border-r font-bold">
             <thead className="border-b">
               <tr className="border-b p-1">
                 <th colSpan={2} scope="col" className="border-r">

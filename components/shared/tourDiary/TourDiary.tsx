@@ -40,9 +40,9 @@ const TourDiary = ({}: Props) => {
           Project Chowari for the m/o {monthName}
         </div>
         <table
-          className="table-auto w-full  border text-start  text-gray-900 font-light border-r "
+          className="table-auto w-full  border text-start  text-gray-900  border-r  font-bold"
           style={{
-            fontSize: "0.5rem",
+            fontSize: "0.6rem",
           }}
         >
           <thead className="border-b">
@@ -96,9 +96,9 @@ const TourDiary = ({}: Props) => {
           </tbody>
         </table>
         <div
-          className="flex justify-between w-3/5 mx-auto mt-12"
+          className="flex justify-between w-3/5 mx-auto mt-12 font-bold"
           style={{
-            fontSize: "0.5rem",
+            fontSize: "0.6rem",
           }}
         >
           <div className="flex space-y-3 flex-col justify-start align-top">
