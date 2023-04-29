@@ -16,13 +16,28 @@ import ToggleForm from "./ToggleForm";
 type Props = {
   closeModal: () => void;
 };
-
 function getDateRange(monthYear: string): { min: string; max: string } {
-  const [month, year] = monthYear.split("-");
-  const monthIndex = new Date(Date.parse(`${month} 1, ${year}`)).getMonth();
-  const maxDate = new Date(Number(year), monthIndex + 1, 0)
-    .toISOString()
-    .split("T")[0];
+  const monthNameToIndex: { [key: string]: number } = {
+    January: 0,
+    February: 1,
+    March: 2,
+    April: 3,
+    May: 4,
+    June: 5,
+    July: 6,
+    August: 7,
+    September: 8,
+    October: 9,
+    November: 10,
+    December: 11,
+  };
+
+  const [monthName, year] = monthYear.split("-");
+  const monthIndex = monthNameToIndex[monthName];
+  const lastDayOfMonth = new Date(Number(year), monthIndex + 1, 0).getDate();
+  const maxDate = `${year}-${("0" + (monthIndex + 1)).slice(-2)}-${(
+    "0" + lastDayOfMonth
+  ).slice(-2)}`;
   const minDate = `${year}-${("0" + (monthIndex + 1)).slice(-2)}-01`;
   return { min: minDate, max: maxDate };
 }
@@ -30,7 +45,7 @@ function getDateRange(monthYear: string): { min: string; max: string } {
 const NormalForm = ({ closeModal }: Props) => {
   const router = useRouter();
   const { monthName } = router.query as { monthName: string };
-
+  console.log({ monthName });
   const { min, max } = getDateRange(monthName);
   const [data, setData] = useState<OneDayDetailsProps>({});
   const { errors, validateDetails } = useFormValidation();
@@ -47,6 +62,7 @@ const NormalForm = ({ closeModal }: Props) => {
 
   const handleDateChange = (event: React.ChangeEvent<HTMLInputElement>) => {
     const date = new Date(event.target.value);
+    console.log({ monthName, min, max });
 
     const [month, year] = monthName.split("-");
     const monthNum = new Date(`${month} 01, ${year}`).getMonth();
