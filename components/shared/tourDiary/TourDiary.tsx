@@ -1,41 +1,25 @@
-import { format } from "date-fns";
 import { useRouter } from "next/router";
-import React, { Fragment, useMemo, useRef, useState } from "react";
+import React, { useState } from "react";
 
-import { useReactToPrint } from "react-to-print";
 import { useTourDiaryDetails } from "../../../data";
-import { convert24To12 } from "../../../utils/time";
-import DeleteButton from "../../tabelData/DeleteButton";
 import TourDiaryCustomRow from "./TourDiaryCustomRow";
 import TourDiaryRow from "./TourDiaryRow";
 
 type Props = {};
 
 const TourDiary = ({}: Props) => {
-  const [setshowDeleteButton, setsetshowDeleteButton] = useState(false);
-  const { details, deleteDateInsideMonth } = useTourDiaryDetails();
+  const { details } = useTourDiaryDetails();
   const router = useRouter();
   const { monthName } = router.query as { monthName: string };
-  console.log(details);
+
   const thisMontDetails = details.find(
     (detail) => detail.monthName === monthName
   );
 
-  const ref = React.createRef<HTMLDivElement>();
-
-  const componentRef = useRef<HTMLDivElement>(null);
-
-  const removeDeleteIcon = () => {
-    setsetshowDeleteButton(false);
-  };
-  const addDeleteIcon = () => {
-    setsetshowDeleteButton(true);
-  };
-
   return (
     <div className="min-w-full sm:px-6 lg:px-8">
       <div className="m-8 mt-20 font-bold text-xs">
-        <div className="my-2">
+        <div className="my-12">
           Tour Diary in r/o Sh./Smt. Meenakshi Circle Supervisor Dhulara,
           Project Chowari for the m/o {monthName}
         </div>

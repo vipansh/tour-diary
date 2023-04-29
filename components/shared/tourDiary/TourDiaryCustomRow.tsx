@@ -12,7 +12,7 @@ type TourDiaryCustomRowProps = {
 
 const TourDiaryCustomRow = ({ detail, monthName }: TourDiaryCustomRowProps) => {
   const [setshowDeleteButton, setsetshowDeleteButton] = useState(false);
-  const { details, deleteDateInsideMonth } = useTourDiaryDetails();
+  const { deleteDateInsideMonth } = useTourDiaryDetails();
 
   const removeDeleteIcon = () => {
     setsetshowDeleteButton(false);

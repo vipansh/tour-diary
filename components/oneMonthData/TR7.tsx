@@ -107,7 +107,7 @@ const TR7 = ({ openModal }: Props) => {
             <div>3.Basic Pay- BP- 21,360/- Head Qtr.- Dhulara</div>
             <div>4.Purpose of Journey- List of Tour Programme attached</div>
           </div>
-          <div className="m-3" style={{ fontSize: "10px" }}>
+          <div className="my-10" style={{ fontSize: "10px" }}>
             <table className="table-auto m-3 min-w-full border text-start  text-gray-900  px-6 py-4  border-r  font-normal">
               <thead className="border-b">
                 <tr className="border-b p-1">

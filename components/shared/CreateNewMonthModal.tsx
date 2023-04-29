@@ -1,9 +1,10 @@
 "use client";
+
 import { Dialog, Transition } from "@headlessui/react";
 import { Fragment, useEffect, useRef, useState } from "react";
 import { useTourDiaryDetails } from "../../data";
 import { format } from "date-fns";
-import Image from "next/image";
+
 import { toast } from "react-toastify";
 
 type CreateNewMonthModalProps = {
