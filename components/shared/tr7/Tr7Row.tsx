@@ -17,13 +17,13 @@ const Tr7Row = ({ detail }: Props) => {
     <Fragment>
       <tr className="border-b mt-1 ">
         <td className="border-r p-1">{detail.startingPoint?.name}</td>
-        <td className="border-r p-1">
+        <td className="border-r p-1" style={{ whiteSpace: "nowrap" }}>
           {detail.date && format(new Date(detail.date), "dd-MM-yyyy")}
           <br />
           {convert24To12(detail.startingPoint?.startTime)}
         </td>
         <td className="border-r p-1">{detail.endPoint?.name}</td>
-        <td className="border-r p-1">
+        <td className="border-r p-1" style={{ whiteSpace: "nowrap" }}>
           {detail.date && format(new Date(detail.date), "dd-MM-yyyy")}
           <br />
           {convert24To12(detail.startingPoint?.endTime)}

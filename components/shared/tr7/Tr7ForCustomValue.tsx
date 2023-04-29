@@ -12,7 +12,7 @@ const Tr7ForCustomValue = ({ detail }: Props) => {
     <Fragment>
       <tr className="border-b mt-1 ">
         <td className="border-r p-1">{detail.startingPoint?.starting?.name}</td>
-        <td className="border-r p-1">
+        <td className="border-r p-1" style={{ whiteSpace: "nowrap" }}>
           {detail.startingPoint?.starting?.dateTime && (
             <SplitDateTime
               dateTime={detail.startingPoint?.starting?.dateTime}
@@ -20,7 +20,7 @@ const Tr7ForCustomValue = ({ detail }: Props) => {
           )}
         </td>
         <td className="border-r p-1">{detail.startingPoint?.ending?.name}</td>
-        <td className="border-r p-1">
+        <td className="border-r p-1" style={{ whiteSpace: "nowrap" }}>
           {detail.startingPoint?.ending?.dateTime && (
             <SplitDateTime dateTime={detail.startingPoint?.ending?.dateTime} />
           )}

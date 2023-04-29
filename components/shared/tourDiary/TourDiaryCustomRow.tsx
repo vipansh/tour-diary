@@ -29,7 +29,7 @@ const TourDiaryCustomRow = ({ detail, monthName }: TourDiaryCustomRowProps) => {
         onMouseLeave={removeDeleteIcon}
       >
         <td className="border-r p-1">{detail.startingPoint?.starting?.name}</td>
-        <td className="border-r p-1">
+        <td className="border-r p-1" style={{ whiteSpace: "nowrap" }}>
           {detail.startingPoint?.starting?.dateTime && (
             <SplitDateTime
               dateTime={detail.startingPoint?.starting?.dateTime}
@@ -37,7 +37,7 @@ const TourDiaryCustomRow = ({ detail, monthName }: TourDiaryCustomRowProps) => {
           )}
         </td>
         <td className="border-r p-1">{detail.startingPoint?.ending?.name}</td>
-        <td className="border-r p-1">
+        <td className="border-r p-1" style={{ whiteSpace: "nowrap" }}>
           {detail.startingPoint?.ending?.dateTime && (
             <SplitDateTime dateTime={detail.startingPoint?.ending?.dateTime} />
           )}
