@@ -58,7 +58,7 @@ const TourDiaryContainer = ({ openModal }: Props) => {
           Create New line
         </button>
       </div>
-      <div className="text-xs" ref={componentRef}>
+      <div className="text-xs font-bold" ref={componentRef}>
         <TourDiary />
       </div>
     </div>

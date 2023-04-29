@@ -103,8 +103,8 @@ const TR7 = ({ openModal }: Props) => {
         </button>
       </div>
 
-      <div className="overflow-hidden" ref={tr7componentRef}>
-        <div className="m-8 mt-20 font-bold text-xs">
+      <div className="overflow-hidden font-bold" ref={tr7componentRef}>
+        <div className="my-8 m-1 mt-20 font-bold text-xs">
           <div className=" text-center">
             <div> H.P.T.R.- 7 </div>
             <div> TRAVELLING EXPENSES CLAIM FORM </div>
@@ -113,8 +113,8 @@ const TR7 = ({ openModal }: Props) => {
             <div>3.Basic Pay- BP- 21,360/- Head Qtr.- Dhulara</div>
             <div>4.Purpose of Journey- List of Tour Programme attached</div>
           </div>
-          <div className="my-10" style={{ fontSize: "10px" }}>
-            <table className="table-auto m-3 min-w-full border text-start  text-gray-900  px-6 py-4  border-r  font-normal">
+          <div className="my-10 font-bold" style={{ fontSize: "12px" }}>
+            <table className="table-auto m-3 min-w-full border text-start  text-gray-900  px-6 py-4  border-r  font-bold">
               <thead className="border-b">
                 <tr className="border-b p-1">
                   <th colSpan={2} scope="col" className="border-r">
