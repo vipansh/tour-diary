@@ -63,7 +63,6 @@ const TR7 = ({ openModal }: Props) => {
     documentTitle: `${monthName} TR7`,
     pageStyle: `
     @page {
-      size: 8.5in 11in;
       marginTop: 1in;
     }
   `,
@@ -104,7 +103,7 @@ const TR7 = ({ openModal }: Props) => {
       </div>
 
       <div className="overflow-hidden font-bold" ref={tr7componentRef}>
-        <div className="my-8 m-1 mt-20 font-bold text-xs">
+        <div className="mx-3 mt-20 font-bold text-xs">
           <div className=" text-center">
             <div> H.P.T.R.- 7 </div>
             <div> TRAVELLING EXPENSES CLAIM FORM </div>
