@@ -98,13 +98,8 @@ const TR7 = ({ openModal }: Props) => {
       </div>
 
       <div className="overflow-hidden" ref={tr7componentRef}>
-        <div
-          className="m-4 font-bold"
-          style={{
-            fontSize: "0.6rem",
-          }}
-        >
-          <div>
+        <div className="m-8 mt-20 font-bold text-xs">
+          <div className=" text-center">
             <div> H.P.T.R.- 7 </div>
             <div> TRAVELLING EXPENSES CLAIM FORM </div>
             <div>1.Establishment- CDPO Chowari Month- {monthName}</div>
@@ -112,103 +107,105 @@ const TR7 = ({ openModal }: Props) => {
             <div>3.Basic Pay- BP- 21,360/- Head Qtr.- Dhulara</div>
             <div>4.Purpose of Journey- List of Tour Programme attached</div>
           </div>
-          <table className="table-auto min-w-full border text-start  text-gray-900  px-6 py-4  border-r font-bold">
-            <thead className="border-b">
-              <tr className="border-b p-1">
-                <th colSpan={2} scope="col" className="border-r">
-                  Departure
-                </th>
-                <th colSpan={2} scope="col" className="border-r">
-                  Arrival
-                </th>
-                <th rowSpan={2} scope="col" className="border-r">
-                  Mode of Travel
-                </th>
-                <th rowSpan={2} scope="col" className="border-r ">
-                  Rate class <br />
-                  of <br />
-                  Travel (Km.)
-                </th>
-                <th rowSpan={2} scope="col" className="border-r">
-                  Actual <br />
-                  Fare
-                  <br /> Paid
-                </th>
-                <th rowSpan={2} scope="col" className="border-r">
-                  Hotel <br />
-                  Charges <br />
-                  if any
-                </th>
-                <th colSpan={2} scope="col" className="border-r">
-                  Daily
-                  <br /> Allowance
-                </th>
-                <th rowSpan={2} scope="col" className="border-r">
-                  Amount
-                </th>
-                <th rowSpan={2} scope="col" className="border-r">
-                  Total <br />
-                  of
-                  <br /> Line
-                </th>
-              </tr>
-              <tr className="border-b ">
-                <th className="border-r p-1">Station</th>
-                <th className="border-r p-1">
-                  Date &<br /> Hour
-                </th>
-                <th className="border-r p-1">Station</th>
-                <th className="border-r">
-                  Date &<br /> Hour
-                </th>
-                <th className="border-r">
-                  No. <br />
-                  of
-                  <br /> Days
-                </th>
-                <th className="border-r p-1">
-                  Rate
-                  <br /> admissibl
-                </th>
-              </tr>
-              <tr className="border-b p-1">
-                <td className="border-r p-1">1</td>
-                <td className="border-r p-1">2</td>
-                <td className="border-r p-1">3</td>
-                <td className="border-r p-1">4</td>
-                <td className="border-r p-1">5</td>
-                <td className="border-r p-1">6</td>
-                <td className="border-r p-1">7</td>
-                <td className="border-r p-1">8(on foot)</td>
-                <td className="border-r p-1">9</td>
-                <td className="border-r p-1">10</td>
-                <td className="border-r p-1">11</td>
-                <td className="border-r p-1">12</td>
-              </tr>
-            </thead>
-            <tbody>
-              {thisMontDetails?.data?.map((detail, index) => {
-                if (detail.isCustom)
-                  return <Tr7ForCustomValue key={index} detail={detail} />;
-                return <Tr7Row key={index} detail={detail} />;
-              })}
-              <tr>
-                <td colSpan={6}>Grand Total</td>
-                <td>{totalFair.totalFairForBus.toFixed(2)}</td>
-                <td>{totalFair.totalFairOnFoot.toFixed(2)}</td>
-                <td> </td>
-                <td> </td>
-                <td>{totalFair.totalDaily.toFixed(2)}</td>
-                <td>
-                  {(
-                    totalFair.totalFairForBus +
-                    totalFair.totalFairOnFoot +
-                    totalFair.totalDaily
-                  ).toFixed(2)}
-                </td>
-              </tr>
-            </tbody>
-          </table>
+          <div className="m-3" style={{ fontSize: "10px" }}>
+            <table className="table-auto m-3 min-w-full border text-start  text-gray-900  px-6 py-4  border-r  font-normal">
+              <thead className="border-b">
+                <tr className="border-b p-1">
+                  <th colSpan={2} scope="col" className="border-r">
+                    Departure
+                  </th>
+                  <th colSpan={2} scope="col" className="border-r">
+                    Arrival
+                  </th>
+                  <th rowSpan={2} scope="col" className="border-r">
+                    Mode of Travel
+                  </th>
+                  <th rowSpan={2} scope="col" className="border-r ">
+                    Rate class <br />
+                    of <br />
+                    Travel (Km.)
+                  </th>
+                  <th rowSpan={2} scope="col" className="border-r">
+                    Actual <br />
+                    Fare
+                    <br /> Paid
+                  </th>
+                  <th rowSpan={2} scope="col" className="border-r">
+                    Hotel <br />
+                    Charges <br />
+                    if any
+                  </th>
+                  <th colSpan={2} scope="col" className="border-r">
+                    Daily
+                    <br /> Allowance
+                  </th>
+                  <th rowSpan={2} scope="col" className="border-r">
+                    Amount
+                  </th>
+                  <th rowSpan={2} scope="col" className="border-r">
+                    Total <br />
+                    of
+                    <br /> Line
+                  </th>
+                </tr>
+                <tr className="border-b ">
+                  <th className="border-r p-1">Station</th>
+                  <th className="border-r p-1">
+                    Date &<br /> Hour
+                  </th>
+                  <th className="border-r p-1">Station</th>
+                  <th className="border-r">
+                    Date &<br /> Hour
+                  </th>
+                  <th className="border-r">
+                    No. <br />
+                    of
+                    <br /> Days
+                  </th>
+                  <th className="border-r p-1">
+                    Rate
+                    <br /> admissible
+                  </th>
+                </tr>
+                <tr className="border-b p-1">
+                  <td className="border-r p-1">1</td>
+                  <td className="border-r p-1">2</td>
+                  <td className="border-r p-1">3</td>
+                  <td className="border-r p-1">4</td>
+                  <td className="border-r p-1">5</td>
+                  <td className="border-r p-1">6</td>
+                  <td className="border-r p-1">7</td>
+                  <td className="border-r p-1">8(on foot)</td>
+                  <td className="border-r p-1">9</td>
+                  <td className="border-r p-1">10</td>
+                  <td className="border-r p-1">11</td>
+                  <td className="border-r p-1">12</td>
+                </tr>
+              </thead>
+              <tbody>
+                {thisMontDetails?.data?.map((detail, index) => {
+                  if (detail.isCustom)
+                    return <Tr7ForCustomValue key={index} detail={detail} />;
+                  return <Tr7Row key={index} detail={detail} />;
+                })}
+                <tr>
+                  <td colSpan={6}>Grand Total</td>
+                  <td>{totalFair.totalFairForBus.toFixed(2)}</td>
+                  <td>{totalFair.totalFairOnFoot.toFixed(2)}</td>
+                  <td> </td>
+                  <td> </td>
+                  <td>{totalFair.totalDaily.toFixed(2)}</td>
+                  <td>
+                    {(
+                      totalFair.totalFairForBus +
+                      totalFair.totalFairOnFoot +
+                      totalFair.totalDaily
+                    ).toFixed(2)}
+                  </td>
+                </tr>
+              </tbody>
+            </table>
+          </div>
         </div>
       </div>
     </div>

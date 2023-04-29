@@ -34,8 +34,8 @@ const TourDiary = ({}: Props) => {
 
   return (
     <div className="min-w-full sm:px-6 lg:px-8">
-      <div className="m-1">
-        <div>
+      <div className="m-8 mt-20 font-bold text-xs">
+        <div className="my-2">
           Tour Diary in r/o Sh./Smt. Meenakshi Circle Supervisor Dhulara,
           Project Chowari for the m/o {monthName}
         </div>
