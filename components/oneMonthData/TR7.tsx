@@ -61,6 +61,12 @@ const TR7 = ({ openModal }: Props) => {
     content: () => tr7componentRef.current,
     copyStyles: true,
     documentTitle: `${monthName} TR7`,
+    pageStyle: `
+    @page {
+      size: 8.5in 11in;
+      marginTop: 1in;
+    }
+  `,
   });
 
   return (

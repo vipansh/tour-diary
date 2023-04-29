@@ -12,6 +12,7 @@ const TourDiary = ({}: Props) => {
   const router = useRouter();
   const { monthName } = router.query as { monthName: string };
 
+
   const thisMontDetails = details.find(
     (detail) => detail.monthName === monthName
   );
