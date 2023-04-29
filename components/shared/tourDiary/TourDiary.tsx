@@ -12,13 +12,12 @@ const TourDiary = ({}: Props) => {
   const router = useRouter();
   const { monthName } = router.query as { monthName: string };
 
-
   const thisMontDetails = details.find(
     (detail) => detail.monthName === monthName
   );
 
   return (
-    <div className="min-w-full mt-5">
+    <div className="min-w-full ">
       <div className="m-1 font-bold text-xs">
         <div className="my-3  pl-16">
           Tour Diary in r/o Sh./Smt. Meenakshi Circle Supervisor Dhulara,
