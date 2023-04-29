@@ -103,7 +103,7 @@ const TR7 = ({ openModal }: Props) => {
       </div>
 
       <div className="overflow-hidden font-bold" ref={tr7componentRef}>
-        <div className="mx-3 mt-20 font-bold text-xs">
+        <div className="mx-3 font-bold text-xs">
           <div className=" text-center">
             <div> H.P.T.R.- 7 </div>
             <div> TRAVELLING EXPENSES CLAIM FORM </div>
