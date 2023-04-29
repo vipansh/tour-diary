@@ -19,7 +19,6 @@ const TourDiaryContainer = ({ openModal }: Props) => {
     documentTitle: `${monthName} TourDiary`,
     pageStyle: `
     @page {
-      size: 8.5in 11in;
       marginTop: 1in;
     }
   `,

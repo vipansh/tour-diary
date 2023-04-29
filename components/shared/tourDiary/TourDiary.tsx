@@ -18,14 +18,14 @@ const TourDiary = ({}: Props) => {
   );
 
   return (
-    <div className="min-w-full sm:px-6 lg:px-8">
-      <div className="m-4 font-bold text-xs">
-        <div className="my-12">
+    <div className="min-w-full">
+      <div className="m-1 font-bold text-xs">
+        <div className="my-3 pl-10">
           Tour Diary in r/o Sh./Smt. Meenakshi Circle Supervisor Dhulara,
           Project Chowari for the m/o {monthName}
         </div>
         <table
-          className="table-auto w-full  border text-start  text-gray-900  border-r  font-bold"
+          className="table-auto w-full  border text-start  text-gray-900  border-r  font-bold mt-4"
           style={{
             fontSize: "0.6rem",
           }}
