@@ -33,7 +33,9 @@ const Tr7Row = ({ detail }: Props) => {
           {convert24To12(detail.startingPoint?.endTime)}
         </td>
 
-        <td className="border-r p-1">{"By Bus/On foot"}</td>
+        <td className="border-r p-1" style={{ letterSpacing: "-0.1em" }}>
+          {"By Bus /On foot"}
+        </td>
         <td className="border-r p-1">
           {detail.distanceByBus}/{detail.distanceOnFoot}
         </td>
@@ -76,7 +78,9 @@ const Tr7Row = ({ detail }: Props) => {
           {convert24To12(detail.endPoint?.endTime)}
         </td>
 
-        <td className="border-r p-1">{"By Bus/On foot"}</td>
+        <td className="border-r p-1" style={{ letterSpacing: "-0.1em" }}>
+          {"By Bus /On foot"}
+        </td>
         <td className="border-r p-1">
           {detail.distanceByBus}/{detail.distanceOnFoot}
         </td>
