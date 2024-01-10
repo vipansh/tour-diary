@@ -32,15 +32,15 @@ const TR7 = ({ openModal }: Props) => {
         : 0;
       totalFairOnFoot += detail.distanceOnFoot ? detail.distanceOnFoot * 1 : 0;
       totalDaily +=
-        detail.date && new Date(detail.date) <= new Date("2023-05-22")
+        detail.date && new Date(detail.date) >= new Date("2023-05-22")
           ? (!detail.distanceOnFoot ? 0 : +detail.distanceOnFoot) +
               (!detail.distanceByBus ? 0 : +detail.distanceByBus) >=
-            8
+            30
             ? 1
             : 0
           : (!detail.distanceOnFoot ? 0 : +detail.distanceOnFoot) +
               (!detail.distanceByBus ? 0 : +detail.distanceByBus) >=
-            30
+            8
           ? 1
           : 0;
       if (detail.isCustom) {
@@ -51,6 +51,7 @@ const TR7 = ({ openModal }: Props) => {
           : 0;
       }
     });
+    console.log({ totalDaily });
     return {
       totalFairForBus: 2 * totalFairForBus,
       totalFairOnFoot: 2 * totalFairOnFoot,
