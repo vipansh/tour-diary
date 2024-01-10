@@ -70,7 +70,7 @@ const TR7 = ({ openModal }: Props) => {
     documentTitle: `${monthName} TR7`,
     pageStyle: `
     @page {
-      margin: 80px 10px 10px 10px !important;
+      margin: 80px 10px 10px 5px !important;
     }
   `,
   });
