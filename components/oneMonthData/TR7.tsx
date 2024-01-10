@@ -32,7 +32,7 @@ const TR7 = ({ openModal }: Props) => {
         : 0;
       totalFairOnFoot += detail.distanceOnFoot ? detail.distanceOnFoot * 1 : 0;
       totalDaily +=
-        detail.date && new Date(detail.date) < new Date("2023-05-22")
+        detail.date && new Date(detail.date) <= new Date("2023-05-22")
           ? (!detail.distanceOnFoot ? 0 : +detail.distanceOnFoot) +
               (!detail.distanceByBus ? 0 : +detail.distanceByBus) >=
             8
