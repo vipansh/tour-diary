@@ -1,22 +1,16 @@
 "use client";
-import React, { useEffect, useState } from "react";
+
+import React, { useState } from "react";
 import { useTourDiaryDetails } from "../../data";
 import CreateNewMonthModal from "../shared/CreateNewMonthModal";
 import TableRow from "./TableRow";
 
-type Props = {};
-
-const TableData = (props: Props) => {
+const TableData = () => {
   const { details } = useTourDiaryDetails();
-  let [isOpen, setIsOpen] = useState(false);
+  const [isOpen, setIsOpen] = useState(false);
 
-  function closeModal() {
-    setIsOpen(false);
-  }
-
-  function openModal() {
-    setIsOpen(true);
-  }
+  const closeModal = () => setIsOpen(false);
+  const openModal = () => setIsOpen(true);
 
   return (
     <>
@@ -36,9 +30,9 @@ const TableData = (props: Props) => {
             <div className="px-6 pt-6 overflow-x-auto">
               <table className="w-full whitespace-nowrap">
                 <tbody>
-                  {details.map((data, index) => {
-                    return <TableRow key={index} data={data} />;
-                  })}
+                  {details.map((data, index) => (
+                    <TableRow key={index} data={data} />
+                  ))}
                 </tbody>
               </table>
             </div>

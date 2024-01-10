@@ -32,9 +32,15 @@ const TR7 = ({ openModal }: Props) => {
         : 0;
       totalFairOnFoot += detail.distanceOnFoot ? detail.distanceOnFoot * 1 : 0;
       totalDaily +=
-        (!detail.distanceOnFoot ? 0 : +detail.distanceOnFoot) +
-          (!detail.distanceByBus ? 0 : +detail.distanceByBus) >=
-        8
+        detail.date && new Date(detail.date) < new Date("2023-05-22")
+          ? (!detail.distanceOnFoot ? 0 : +detail.distanceOnFoot) +
+              (!detail.distanceByBus ? 0 : +detail.distanceByBus) >=
+            8
+            ? 1
+            : 0
+          : (!detail.distanceOnFoot ? 0 : +detail.distanceOnFoot) +
+              (!detail.distanceByBus ? 0 : +detail.distanceByBus) >=
+            30
           ? 1
           : 0;
       if (detail.isCustom) {
@@ -63,7 +69,7 @@ const TR7 = ({ openModal }: Props) => {
     documentTitle: `${monthName} TR7`,
     pageStyle: `
     @page {
-      margin: 80px 10px 10px 10px !important;
+      margin: 20px 10px 10px 10px !important;
     }
   `,
   });
@@ -104,7 +110,7 @@ const TR7 = ({ openModal }: Props) => {
 
       <div className="overflow-hidden font-bold" ref={tr7componentRef}>
         <div className="mx-3 font-bold text-xs">
-          <div className=" text-center">
+          <div className="text-center">
             <div> H.P.T.R.- 7 </div>
             <div> TRAVELLING EXPENSES CLAIM FORM </div>
             <div>1.Establishment- CDPO Chowari Month- {monthName}</div>
@@ -112,7 +118,7 @@ const TR7 = ({ openModal }: Props) => {
             <div>3.Basic Pay- BP- 21,360/- Head Qtr.- Dhulara</div>
             <div>4.Purpose of Journey- List of Tour Programme attached</div>
           </div>
-          <div className="my-10 font-bold" style={{ fontSize: "12px" }}>
+          <div className="my-10 font-bold" style={{ fontSize: "13px" }}>
             <table className="table-auto m-3 min-w-full border text-start  text-gray-900  px-6 py-4  border-r  font-bold">
               <thead className="border-b">
                 <tr className="border-b p-1">
@@ -123,7 +129,7 @@ const TR7 = ({ openModal }: Props) => {
                     Arrival
                   </th>
                   <th rowSpan={2} scope="col" className="border-r">
-                    Mode of Travel
+                    Mode <br /> of <br /> Travel
                   </th>
                   <th rowSpan={2} scope="col" className="border-r ">
                     Rate class <br />
@@ -185,6 +191,20 @@ const TR7 = ({ openModal }: Props) => {
                   <td className="border-r p-1">10</td>
                   <td className="border-r p-1">11</td>
                   <td className="border-r p-1">12</td>
+                </tr>
+                <tr className="border-b p-1">
+                  <td className="border-r p-2"></td>
+                  <td className="border-r p-1"></td>
+                  <td className="border-r p-1"></td>
+                  <td className="border-r p-1"></td>
+                  <td className="border-r p-1"></td>
+                  <td className="border-r p-1"></td>
+                  <td className="border-r p-1"></td>
+                  <td className="border-r p-1"></td>
+                  <td className="border-r p-1"></td>
+                  <td className="border-r p-1"></td>
+                  <td className="border-r p-1"></td>
+                  <td className="border-r p-1"></td>
                 </tr>
               </thead>
               <tbody>

@@ -9,9 +9,13 @@ type Props = {
 
 const Tr7Row = ({ detail }: Props) => {
   const addDaily =
-    (!detail.distanceOnFoot ? 0 : +detail.distanceOnFoot) +
-      (!detail.distanceByBus ? 0 : +detail.distanceByBus) >=
-    8;
+    detail.date && new Date(detail.date) < new Date("2023-05-22")
+      ? (!detail.distanceOnFoot ? 0 : +detail.distanceOnFoot) +
+          (!detail.distanceByBus ? 0 : +detail.distanceByBus) >=
+        30
+      : (!detail.distanceOnFoot ? 0 : +detail.distanceOnFoot) +
+          (!detail.distanceByBus ? 0 : +detail.distanceByBus) >=
+        8;
   console.log({ detail });
   return (
     <Fragment>
