@@ -116,7 +116,7 @@ const TR7 = ({ openModal }: Props) => {
             <div> TRAVELLING EXPENSES CLAIM FORM </div>
             <div>1.Establishment- CDPO Chowari Month- {monthName}</div>
             <div>2.Name and Designation- Meenakshi,Supervisor </div>
-            <div>3.Basic Pay- BP- 35,600/- Head Qtr.- Dhulara</div>
+            <div>3.Basic Pay- BP- 36,700/- Head Qtr.- Dhulara</div>
             <div>4.Purpose of Journey- List of Tour Programme attached</div>
           </div>
           <div className="my-10 font-bold" style={{ fontSize: "13px" }}>
