@@ -20,7 +20,7 @@ const TourDiary = ({}: Props) => {
     <div className="min-w-full ">
       <div className="m-1 font-bold text-xs">
         <div className="my-3  pl-16">
-          Tour Diary in r/o Sh./Smt. Meenakshi Circle Supervisor Dhulara,
+          Tour Diary in r/o Sh./Smt. Kumari Meenakshi Circle Supervisor Dhulara,
           Project Chowari for the m/o {monthName}
         </div>
         <table
@@ -91,7 +91,7 @@ const TourDiary = ({}: Props) => {
             <div>Chowari, Distt. Chamba,H.P. </div>
           </div>
           <div className="flex space-y-6 flex-col justify-start align-top">
-            <div>Meenakshi</div>
+            <div>Kumari Meenakshi</div>
             <div>Circle Supervisor Circle- Dhulara</div>
           </div>
         </div>
