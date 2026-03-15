@@ -33,9 +33,11 @@ const toNumber = (value: unknown) => {
 };
 
 const isDailyAllowanceApplicable = (detail: OneDayDetailsProps) => {
-  const totalDistance = toNumber(detail.distanceByBus) + toNumber(detail.distanceOnFoot);
+  const totalDistance =
+    toNumber(detail.distanceByBus) + toNumber(detail.distanceOnFoot);
   const minimumDistance =
-    detail.date && new Date(detail.date) >= new Date(DAILY_ALLOWANCE_SWITCH_DATE)
+    detail.date &&
+    new Date(detail.date) >= new Date(DAILY_ALLOWANCE_SWITCH_DATE)
       ? 30
       : 8;
 
@@ -48,7 +50,7 @@ const getEntryTotals = (detail: OneDayDetailsProps): Totals => {
     const onFootDistance = toNumber(detail.startingPoint?.distanceOnFoot);
     const totalDays = toNumber(detail.totalDays);
 
-    const busFareOneWay = Math.floor(busDistance * 2.2);
+    const busFareOneWay = Math.floor(busDistance * 2.5);
     const onFootFareOneWay = Math.floor(onFootDistance * 1);
     const totalFairForBus = busFareOneWay * 2;
     const totalFairOnFoot = onFootFareOneWay * 2;
@@ -64,7 +66,7 @@ const getEntryTotals = (detail: OneDayDetailsProps): Totals => {
 
   const busDistance = toNumber(detail.distanceByBus);
   const onFootDistance = toNumber(detail.distanceOnFoot);
-  const busFareOneWay = Math.floor(busDistance * 2.2);
+  const busFareOneWay = Math.floor(busDistance * 2.5);
   const onFootFareOneWay = Math.floor(onFootDistance * 1);
   const totalFairForBus = busFareOneWay * 2;
   const totalFairOnFoot = onFootFareOneWay * 2;
@@ -101,10 +103,166 @@ const paginateRows = (rows: OneDayDetailsProps[]) => {
     startIndex < rows.length;
     startIndex += NEXT_PAGE_ROW_LIMIT
   ) {
-    paginatedRows.push(rows.slice(startIndex, startIndex + NEXT_PAGE_ROW_LIMIT));
+    paginatedRows.push(
+      rows.slice(startIndex, startIndex + NEXT_PAGE_ROW_LIMIT),
+    );
   }
 
   return paginatedRows;
+};
+
+type Tr7TableProps = {
+  rowsOnPage: OneDayDetailsProps[];
+  pageIndex: number;
+  currentPageTotal: Totals;
+  totalFair: Totals;
+  showPageTotal: boolean;
+  showGrandTotal: boolean;
+};
+
+const Tr7Table = ({
+  rowsOnPage,
+  pageIndex,
+  currentPageTotal,
+  totalFair,
+  showPageTotal,
+  showGrandTotal,
+}: Tr7TableProps) => {
+  return (
+    <table className="tr7-print-table table-auto m-3 min-w-full border text-start  text-gray-900  px-6 py-4  border-r  font-bold">
+      <thead className="border-b">
+        <tr className="border-b p-1">
+          <th colSpan={2} scope="col" className="border-r">
+            Departure
+          </th>
+          <th colSpan={2} scope="col" className="border-r">
+            Arrival
+          </th>
+          <th rowSpan={2} scope="col" className="border-r">
+            Mode <br /> of <br /> Travel
+          </th>
+          <th rowSpan={2} scope="col" className="border-r ">
+            Rate class <br />
+            of <br />
+            Travel (Km.)
+          </th>
+          <th rowSpan={2} scope="col" className="border-r">
+            Actual <br />
+            Fare
+            <br /> Paid
+          </th>
+          <th rowSpan={2} scope="col" className="border-r">
+            Hotel <br />
+            Charges <br />
+            if any
+          </th>
+          <th colSpan={2} scope="col" className="border-r">
+            Daily
+            <br /> Allowance
+          </th>
+          <th rowSpan={2} scope="col" className="border-r">
+            Amount
+          </th>
+          <th rowSpan={2} scope="col" className="border-r">
+            Total <br />
+            of
+            <br /> Line
+          </th>
+        </tr>
+        <tr className="border-b ">
+          <th className="border-r p-1">Station</th>
+          <th className="border-r p-1">
+            Date &<br /> Hour
+          </th>
+          <th className="border-r p-1">Station</th>
+          <th className="border-r">
+            Date &<br /> Hour
+          </th>
+          <th className="border-r">
+            No. <br />
+            of
+            <br /> Days
+          </th>
+          <th className="border-r p-1">
+            Rate
+            <br /> admissible
+          </th>
+        </tr>
+        <tr className="border-b p-1">
+          <td className="border-r p-1">1</td>
+          <td className="border-r p-1">2</td>
+          <td className="border-r p-1">3</td>
+          <td className="border-r p-1">4</td>
+          <td className="border-r p-1">5</td>
+          <td className="border-r p-1">6</td>
+          <td className="border-r p-1">7</td>
+          <td className="border-r p-1">8(on foot)</td>
+          <td className="border-r p-1">9</td>
+          <td className="border-r p-1">10</td>
+          <td className="border-r p-1">11</td>
+          <td className="border-r p-1">12</td>
+        </tr>
+        <tr className="border-b p-1">
+          <td className="border-r p-2"></td>
+          <td className="border-r p-1"></td>
+          <td className="border-r p-1"></td>
+          <td className="border-r p-1"></td>
+          <td className="border-r p-1"></td>
+          <td className="border-r p-1"></td>
+          <td className="border-r p-1"></td>
+          <td className="border-r p-1"></td>
+          <td className="border-r p-1"></td>
+          <td className="border-r p-1"></td>
+          <td className="border-r p-1"></td>
+          <td className="border-r p-1"></td>
+        </tr>
+      </thead>
+      {rowsOnPage.map((detail, rowIndex) => {
+        const rowKey = `row-${pageIndex}-${rowIndex}`;
+        if (detail.isCustom) {
+          return <Tr7ForCustomValue key={rowKey} detail={detail} />;
+        }
+        return <Tr7Row key={rowKey} detail={detail} />;
+      })}
+      <tfoot>
+        {showPageTotal && (
+          <tr className="border-t-2">
+            <td colSpan={6}>Page {pageIndex + 1} Total</td>
+            <td>{currentPageTotal.totalFairForBus.toFixed(2)}</td>
+            <td>{currentPageTotal.totalFairOnFoot.toFixed(2)}</td>
+            <td></td>
+            <td></td>
+            <td>{currentPageTotal.totalDaily.toFixed(2)}</td>
+            <td>{currentPageTotal.totalAmount.toFixed(2)}</td>
+          </tr>
+        )}
+        {showGrandTotal && (
+          <tr className="border-t-2 font-extrabold">
+            <td colSpan={6}>Grand Total</td>
+            <td>{totalFair.totalFairForBus.toFixed(2)}</td>
+            <td>{totalFair.totalFairOnFoot.toFixed(2)}</td>
+            <td></td>
+            <td></td>
+            <td>{totalFair.totalDaily.toFixed(2)}</td>
+            <td>{totalFair.totalAmount.toFixed(2)}</td>
+          </tr>
+        )}
+      </tfoot>
+    </table>
+  );
+};
+
+const Tr7Heading = ({ monthName }: { monthName: string }) => {
+  return (
+    <div className="text-center">
+      <div> H.P.T.R.- 7 </div>
+      <div> TRAVELLING EXPENSES CLAIM FORM </div>
+      <div>1.Establishment- CDPO Chowari Month- {monthName}</div>
+      <div>2.Name and Designation- Kumari Meenakshi,Supervisor </div>
+      <div>3.Basic Pay- BP- 37,800/- Head Qtr.- Dhulara</div>
+      <div>4.Purpose of Journey- List of Tour Programme attached</div>
+    </div>
+  );
 };
 
 const TR7 = ({ openModal }: Props) => {
@@ -116,23 +274,29 @@ const TR7 = ({ openModal }: Props) => {
     (detail) => detail.monthName === monthName,
   );
 
-  const paginatedRows = useMemo(
-    () => paginateRows(thisMontDetails?.data || []),
+  const allRows = useMemo(
+    () => thisMontDetails?.data || [],
     [thisMontDetails?.data],
   );
-  const pageTotals = useMemo(
+  const printPaginatedRows = useMemo(() => paginateRows(allRows), [allRows]);
+  const printPageTotals = useMemo(
     () =>
-      paginatedRows.map((rowsOnPage) =>
+      printPaginatedRows.map((rowsOnPage) =>
         rowsOnPage.reduce(
-          (runningTotal, detail) => addTotals(runningTotal, getEntryTotals(detail)),
+          (runningTotal, detail) =>
+            addTotals(runningTotal, getEntryTotals(detail)),
           ZERO_TOTALS,
         ),
       ),
-    [paginatedRows],
+    [printPaginatedRows],
   );
   const totalFair = useMemo(
-    () => pageTotals.reduce((runningTotal, onePageTotal) => addTotals(runningTotal, onePageTotal), ZERO_TOTALS),
-    [pageTotals],
+    () =>
+      printPageTotals.reduce(
+        (runningTotal, onePageTotal) => addTotals(runningTotal, onePageTotal),
+        ZERO_TOTALS,
+      ),
+    [printPageTotals],
   );
 
   const tr7componentRef = useRef<HTMLDivElement>(null);
@@ -144,7 +308,18 @@ const TR7 = ({ openModal }: Props) => {
     @page {
       margin: 80px 10px 10px 5px !important;
     }
+    .tr7-print-only {
+      display: none;
+    }
     @media print {
+      .tr7-screen-only {
+        display: none !important;
+      }
+
+      .tr7-print-only {
+        display: block !important;
+      }
+
       .tr7-print-page {
         break-after: page;
         page-break-after: always;
@@ -202,151 +377,50 @@ const TR7 = ({ openModal }: Props) => {
       </div>
 
       <div className="overflow-hidden font-bold" ref={tr7componentRef}>
-        {paginatedRows.map((rowsOnPage, pageIndex) => {
-          const isFirstPage = pageIndex === 0;
-          const isLastPage = pageIndex === paginatedRows.length - 1;
-          const currentPageTotal = pageTotals[pageIndex] || ZERO_TOTALS;
+        <div className="tr7-screen-only">
+          <div className="mx-3 font-bold text-xs">
+            <Tr7Heading monthName={monthName} />
+            <div className="my-10 font-bold" style={{ fontSize: "13px" }}>
+              <Tr7Table
+                rowsOnPage={allRows}
+                pageIndex={0}
+                currentPageTotal={ZERO_TOTALS}
+                totalFair={totalFair}
+                showPageTotal={false}
+                showGrandTotal={true}
+              />
+            </div>
+          </div>
+        </div>
 
-          return (
-            <div key={`print-page-${pageIndex}`} className="tr7-print-page">
-              <div className="mx-3 font-bold text-xs">
-                {isFirstPage && (
-                  <div className="text-center">
-                    <div> H.P.T.R.- 7 </div>
-                    <div> TRAVELLING EXPENSES CLAIM FORM </div>
-                    <div>1.Establishment- CDPO Chowari Month- {monthName}</div>
-                    <div>2.Name and Designation- Kumari Meenakshi,Supervisor </div>
-                    <div>3.Basic Pay- BP- 37,800/- Head Qtr.- Dhulara</div>
-                    <div>4.Purpose of Journey- List of Tour Programme attached</div>
+        <div className="tr7-print-only" style={{ display: "none" }}>
+          {printPaginatedRows.map((rowsOnPage, pageIndex) => {
+            const isFirstPage = pageIndex === 0;
+            const isLastPage = pageIndex === printPaginatedRows.length - 1;
+            const currentPageTotal = printPageTotals[pageIndex] || ZERO_TOTALS;
+
+            return (
+              <div key={`print-page-${pageIndex}`} className="tr7-print-page">
+                <div className="mx-3 font-bold text-xs">
+                  {isFirstPage && <Tr7Heading monthName={monthName} />}
+                  <div
+                    className={isFirstPage ? "my-10 font-bold" : "my-4 font-bold"}
+                    style={{ fontSize: "13px" }}
+                  >
+                    <Tr7Table
+                      rowsOnPage={rowsOnPage}
+                      pageIndex={pageIndex}
+                      currentPageTotal={currentPageTotal}
+                      totalFair={totalFair}
+                      showPageTotal={true}
+                      showGrandTotal={isLastPage}
+                    />
                   </div>
-                )}
-                <div
-                  className={isFirstPage ? "my-10 font-bold" : "my-4 font-bold"}
-                  style={{ fontSize: "13px" }}
-                >
-                  <table className="tr7-print-table table-auto m-3 min-w-full border text-start  text-gray-900  px-6 py-4  border-r  font-bold">
-                    <thead className="border-b">
-                      <tr className="border-b p-1">
-                        <th colSpan={2} scope="col" className="border-r">
-                          Departure
-                        </th>
-                        <th colSpan={2} scope="col" className="border-r">
-                          Arrival
-                        </th>
-                        <th rowSpan={2} scope="col" className="border-r">
-                          Mode <br /> of <br /> Travel
-                        </th>
-                        <th rowSpan={2} scope="col" className="border-r ">
-                          Rate class <br />
-                          of <br />
-                          Travel (Km.)
-                        </th>
-                        <th rowSpan={2} scope="col" className="border-r">
-                          Actual <br />
-                          Fare
-                          <br /> Paid
-                        </th>
-                        <th rowSpan={2} scope="col" className="border-r">
-                          Hotel <br />
-                          Charges <br />
-                          if any
-                        </th>
-                        <th colSpan={2} scope="col" className="border-r">
-                          Daily
-                          <br /> Allowance
-                        </th>
-                        <th rowSpan={2} scope="col" className="border-r">
-                          Amount
-                        </th>
-                        <th rowSpan={2} scope="col" className="border-r">
-                          Total <br />
-                          of
-                          <br /> Line
-                        </th>
-                      </tr>
-                      <tr className="border-b ">
-                        <th className="border-r p-1">Station</th>
-                        <th className="border-r p-1">
-                          Date &<br /> Hour
-                        </th>
-                        <th className="border-r p-1">Station</th>
-                        <th className="border-r">
-                          Date &<br /> Hour
-                        </th>
-                        <th className="border-r">
-                          No. <br />
-                          of
-                          <br /> Days
-                        </th>
-                        <th className="border-r p-1">
-                          Rate
-                          <br /> admissible
-                        </th>
-                      </tr>
-                      <tr className="border-b p-1">
-                        <td className="border-r p-1">1</td>
-                        <td className="border-r p-1">2</td>
-                        <td className="border-r p-1">3</td>
-                        <td className="border-r p-1">4</td>
-                        <td className="border-r p-1">5</td>
-                        <td className="border-r p-1">6</td>
-                        <td className="border-r p-1">7</td>
-                        <td className="border-r p-1">8(on foot)</td>
-                        <td className="border-r p-1">9</td>
-                        <td className="border-r p-1">10</td>
-                        <td className="border-r p-1">11</td>
-                        <td className="border-r p-1">12</td>
-                      </tr>
-                      <tr className="border-b p-1">
-                        <td className="border-r p-2"></td>
-                        <td className="border-r p-1"></td>
-                        <td className="border-r p-1"></td>
-                        <td className="border-r p-1"></td>
-                        <td className="border-r p-1"></td>
-                        <td className="border-r p-1"></td>
-                        <td className="border-r p-1"></td>
-                        <td className="border-r p-1"></td>
-                        <td className="border-r p-1"></td>
-                        <td className="border-r p-1"></td>
-                        <td className="border-r p-1"></td>
-                        <td className="border-r p-1"></td>
-                      </tr>
-                    </thead>
-                    {rowsOnPage.map((detail, rowIndex) => {
-                      const rowKey = `row-${pageIndex}-${rowIndex}`;
-                      if (detail.isCustom) {
-                        return <Tr7ForCustomValue key={rowKey} detail={detail} />;
-                      }
-                      return <Tr7Row key={rowKey} detail={detail} />;
-                    })}
-                    <tfoot>
-                      <tr className="border-t-2">
-                        <td colSpan={6}>Page {pageIndex + 1} Total</td>
-                        <td>{currentPageTotal.totalFairForBus.toFixed(2)}</td>
-                        <td>{currentPageTotal.totalFairOnFoot.toFixed(2)}</td>
-                        <td></td>
-                        <td></td>
-                        <td>{currentPageTotal.totalDaily.toFixed(2)}</td>
-                        <td>{currentPageTotal.totalAmount.toFixed(2)}</td>
-                      </tr>
-                      {isLastPage && (
-                        <tr className="border-t-2 font-extrabold">
-                          <td colSpan={6}>Grand Total</td>
-                          <td>{totalFair.totalFairForBus.toFixed(2)}</td>
-                          <td>{totalFair.totalFairOnFoot.toFixed(2)}</td>
-                          <td></td>
-                          <td></td>
-                          <td>{totalFair.totalDaily.toFixed(2)}</td>
-                          <td>{totalFair.totalAmount.toFixed(2)}</td>
-                        </tr>
-                      )}
-                    </tfoot>
-                  </table>
                 </div>
               </div>
-            </div>
-          );
-        })}
+            );
+          })}
+        </div>
       </div>
     </div>
   );

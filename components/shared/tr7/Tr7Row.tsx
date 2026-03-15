@@ -10,7 +10,7 @@ type Props = {
 const Tr7Row = ({ detail }: Props) => {
   const distanceByBus = Number(detail.distanceByBus || 0);
   const distanceOnFoot = Number(detail.distanceOnFoot || 0);
-  const busFareOneWay = Math.floor(distanceByBus * 2.2);
+  const busFareOneWay = Math.floor(distanceByBus * 2.5);
   const onFootFareOneWay = Math.floor(distanceOnFoot * 1);
 
   const addDaily =
