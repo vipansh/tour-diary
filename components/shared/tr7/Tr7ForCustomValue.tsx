@@ -8,9 +8,17 @@ type Props = {
 };
 
 const Tr7ForCustomValue = ({ detail }: Props) => {
+  const distanceByBus = Number(detail.startingPoint?.distanceByBus || 0);
+  const distanceOnFoot = Number(detail.startingPoint?.distanceOnFoot || 0);
+  const totalDays = Number(detail.totalDays || 0);
+  const busFareOneWay = Math.floor(distanceByBus * 2.5);
+  const onFootFareOneWay = Math.floor(distanceOnFoot * 1);
+  const stayDaily = totalDays * 160;
+  const lineTotal = 2 * busFareOneWay + 2 * onFootFareOneWay + stayDaily + 50;
+
   return (
-    <Fragment>
-      <tr className="border-b mt-1 ">
+    <tbody className="tr7-entry-group">
+      <tr className="tr7-entry-row border-b mt-1 ">
         <td className="border-r p-1">{detail.startingPoint?.starting?.name}</td>
         <td className="border-r p-1" style={{ whiteSpace: "nowrap" }}>
           {detail.startingPoint?.starting?.dateTime && (
@@ -32,28 +40,19 @@ const Tr7ForCustomValue = ({ detail }: Props) => {
           {detail.startingPoint?.distanceOnFoot}
         </td>
         <td className="border-r p-1">
-          {detail.startingPoint?.distanceByBus &&
-            Math.floor(detail.startingPoint?.distanceByBus * 2.2).toFixed(2)}
+          {detail.startingPoint?.distanceByBus && busFareOneWay.toFixed(2)}
         </td>
         <td className="border-r p-1">
-          {detail.startingPoint?.distanceOnFoot &&
-            Math.floor(detail.startingPoint?.distanceOnFoot * 1).toFixed(2)}
+          {detail.startingPoint?.distanceOnFoot && onFootFareOneWay.toFixed(2)}
         </td>
-        <td className="border-r p-1">{detail.totalDays} days</td>
+        <td className="border-r p-1">{totalDays} days</td>
         <td className="border-r p-1">160/-</td>
-        <td className="border-r p-1">
-          {detail?.totalDays && Math.floor(160 * detail?.totalDays).toFixed(2)}
-        </td>
+        <td className="border-r p-1">{stayDaily.toFixed(2)}</td>
         <td className="border-r p-1" rowSpan={2}>
-          {(
-            2 * Math.floor((detail.startingPoint?.distanceByBus || 0) * 2.2) +
-            Math.floor((detail.startingPoint?.distanceOnFoot || 0) * 1) +
-            (detail?.totalDays ? detail?.totalDays * 160 : 0) +
-            50
-          ).toFixed(2)}
+          {lineTotal.toFixed(2)}
         </td>
       </tr>
-      <tr className="border-b border-gray-400 ">
+      <tr className="tr7-entry-row border-b border-gray-400 ">
         <td className="border-r p-1">{detail.endPoint?.starting?.name}</td>
         <td className="border-r p-1">
           {detail.endPoint?.starting?.dateTime && (
@@ -73,18 +72,16 @@ const Tr7ForCustomValue = ({ detail }: Props) => {
           {detail.startingPoint?.distanceOnFoot}
         </td>
         <td className="border-r p-1">
-          {detail.startingPoint?.distanceByBus &&
-            Math.floor(detail.startingPoint?.distanceByBus * 2.2).toFixed(2)}
+          {detail.startingPoint?.distanceByBus && busFareOneWay.toFixed(2)}
         </td>
         <td className="border-r p-1">
-          {detail.startingPoint?.distanceOnFoot &&
-            Math.floor(detail.startingPoint?.distanceOnFoot * 1).toFixed(2)}
+          {detail.startingPoint?.distanceOnFoot && onFootFareOneWay.toFixed(2)}
         </td>
         <td className="border-r p-1">70%</td>
         <td className="border-r p-1">72/-</td>
         <td className="border-r p-1">50.00</td>
       </tr>
-    </Fragment>
+    </tbody>
   );
 };
 

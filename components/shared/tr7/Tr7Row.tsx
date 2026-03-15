@@ -1,4 +1,4 @@
-import React, { Fragment } from "react";
+import React from "react";
 import { convert24To12 } from "../../../utils/time";
 import { format } from "date-fns";
 import { OneDayDetailsProps } from "../../../data";
@@ -8,18 +8,22 @@ type Props = {
 };
 
 const Tr7Row = ({ detail }: Props) => {
+  const distanceByBus = Number(detail.distanceByBus || 0);
+  const distanceOnFoot = Number(detail.distanceOnFoot || 0);
+  const busFareOneWay = Math.floor(distanceByBus * 2.2);
+  const onFootFareOneWay = Math.floor(distanceOnFoot * 1);
+
   const addDaily =
     detail.date && new Date(detail.date) >= new Date("2023-05-22")
-      ? (!detail.distanceOnFoot ? 0 : +detail.distanceOnFoot) +
-          (!detail.distanceByBus ? 0 : +detail.distanceByBus) >=
-        30
-      : (!detail.distanceOnFoot ? 0 : +detail.distanceOnFoot) +
-          (!detail.distanceByBus ? 0 : +detail.distanceByBus) >=
-        8;
+      ? distanceOnFoot + distanceByBus >= 30
+      : distanceOnFoot + distanceByBus >= 8;
+
+  const lineTotal =
+    2 * busFareOneWay + 2 * onFootFareOneWay + (addDaily ? 50 : 0);
 
   return (
-    <Fragment>
-      <tr className="border-b mt-1 ">
+    <tbody className="tr7-entry-group">
+      <tr className="tr7-entry-row border-b mt-1 ">
         <td className="border-r p-1">{detail.startingPoint?.name}</td>
         <td className="border-r p-1" style={{ whiteSpace: "nowrap" }}>
           {detail.date && format(new Date(detail.date), "dd-MM-yyyy")}
@@ -40,12 +44,10 @@ const Tr7Row = ({ detail }: Props) => {
           {detail.distanceByBus}/{detail.distanceOnFoot}
         </td>
         <td className="border-r p-1">
-          {detail.distanceByBus &&
-            Math.floor(detail.distanceByBus * 2.2).toFixed(2)}
+          {detail.distanceByBus && busFareOneWay.toFixed(2)}
         </td>
         <td className="border-r p-1">
-          {detail.distanceOnFoot &&
-            Math.floor(detail.distanceOnFoot * 1).toFixed(2)}
+          {detail.distanceOnFoot && onFootFareOneWay.toFixed(2)}
         </td>
         <td rowSpan={2} className="border-r p-1">
           {addDaily ? "  70%" : "-"}
@@ -57,14 +59,10 @@ const Tr7Row = ({ detail }: Props) => {
           {addDaily ? "50.00" : "-"}
         </td>
         <td rowSpan={2} className="border-r p-1">
-          {(
-            2 * Math.floor((detail.distanceByBus || 0) * 2.2) +
-            Math.floor((detail.distanceOnFoot || 0) * 2) +
-            (addDaily ? 50 : 0)
-          ).toFixed(2)}
+          {lineTotal.toFixed(2)}
         </td>
       </tr>
-      <tr className="border-b border-gray-400 ">
+      <tr className="tr7-entry-row border-b border-gray-400 ">
         <td className="border-r p-1">{detail.endPoint?.name}</td>
         <td className="border-r p-1">
           {detail.date && format(new Date(detail.date), "dd-MM-yyyy")}
@@ -85,15 +83,13 @@ const Tr7Row = ({ detail }: Props) => {
           {detail.distanceByBus}/{detail.distanceOnFoot}
         </td>
         <td className="border-r p-1">
-          {detail.distanceByBus &&
-            Math.floor(detail.distanceByBus * 2.2).toFixed(2)}
+          {detail.distanceByBus && busFareOneWay.toFixed(2)}
         </td>
         <td className="border-r p-1">
-          {detail.distanceOnFoot &&
-            Math.floor(detail.distanceOnFoot * 1).toFixed(2)}
+          {detail.distanceOnFoot && onFootFareOneWay.toFixed(2)}
         </td>
       </tr>
-    </Fragment>
+    </tbody>
   );
 };
 
