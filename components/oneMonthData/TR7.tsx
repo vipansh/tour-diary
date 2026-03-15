@@ -18,7 +18,7 @@ const TR7 = ({ openModal }: Props) => {
   const { monthName } = router.query as { monthName: string };
 
   const thisMontDetails = details.find(
-    (detail) => detail.monthName === monthName
+    (detail) => detail.monthName === monthName,
   );
 
   const calculateTotalFair = () => {
@@ -39,10 +39,10 @@ const TR7 = ({ openModal }: Props) => {
             ? 1
             : 0
           : (!detail.distanceOnFoot ? 0 : +detail.distanceOnFoot) +
-              (!detail.distanceByBus ? 0 : +detail.distanceByBus) >=
-            8
-          ? 1
-          : 0;
+                (!detail.distanceByBus ? 0 : +detail.distanceByBus) >=
+              8
+            ? 1
+            : 0;
       if (detail.isCustom) {
         totalStayDaily += detail.totalDays || 0;
         totalDaily += 1;
@@ -116,7 +116,7 @@ const TR7 = ({ openModal }: Props) => {
             <div> TRAVELLING EXPENSES CLAIM FORM </div>
             <div>1.Establishment- CDPO Chowari Month- {monthName}</div>
             <div>2.Name and Designation- Kumari Meenakshi,Supervisor </div>
-            <div>3.Basic Pay- BP- 36,700/- Head Qtr.- Dhulara</div>
+            <div>3.Basic Pay- BP- 37,800/- Head Qtr.- Dhulara</div>
             <div>4.Purpose of Journey- List of Tour Programme attached</div>
           </div>
           <div className="my-10 font-bold" style={{ fontSize: "13px" }}>
