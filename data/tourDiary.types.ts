@@ -1,4 +1,5 @@
 export type OneDayDetailsProps = {
+  id?: string;
   date?: string; //"2022-06-15",
   startingPoint?: {
     startTime?: string; // "8?:00 AM";
@@ -56,4 +57,13 @@ export interface TourDiaryDetailsStore extends TourDiaryDetailsState {
   deleteMonth(monthName: string): void;
   updateDataInsideMonth(monthName: string, value: OneDayDetailsProps): void;
   deleteDateInsideMonth(monthName: string, date: string): void;
+  deleteEntryInsideMonth(monthName: string, entryId: string): void;
+  importReviewedEntries(
+    entries: Array<{
+      monthName: string;
+      value: OneDayDetailsProps;
+      replaceEntryId?: string;
+    }>,
+  ): void;
+  undoLastImport(): boolean;
 }

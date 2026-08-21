@@ -64,7 +64,7 @@ const CustomDataForm = ({ closeModal }: Props) => {
     {
       data?.endPoint?.name &&
         addLocalStorageItem(
-          STORAGE_KEYS.DATABASE,
+          STORAGE_KEYS.ADVANCE_DATABASE,
           JSON.stringify({ ...database, [data.endPoint.name]: data })
         );
     }

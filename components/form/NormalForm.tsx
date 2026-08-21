@@ -97,7 +97,7 @@ const NormalForm = ({ closeModal }: Props) => {
 
   const heandelEndPointName = (value: string) => {
     if (database[value]) {
-      const prefilledValues = database[value];
+      const prefilledValues = JSON.parse(JSON.stringify(database[value]));
       prefilledValues.date = data.date;
       setData(prefilledValues);
       toast.success("Data autofilled");

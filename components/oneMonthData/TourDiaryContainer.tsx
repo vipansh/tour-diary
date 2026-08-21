@@ -1,8 +1,10 @@
 import { useRouter } from "next/router";
-import React, { useRef } from "react";
+import React, { useRef, useState } from "react";
 
 import { useReactToPrint } from "react-to-print";
 import TourDiary from "../shared/tourDiary/TourDiary";
+import { useTourDiaryDetails } from "../../data";
+import { validateEntriesForPrint } from "../../utils/printValidation";
 
 type Props = {
   openModal: () => void;
@@ -11,6 +13,9 @@ type Props = {
 const TourDiaryContainer = ({ openModal }: Props) => {
   const router = useRouter();
   const { monthName } = router.query as { monthName: string };
+  const { details } = useTourDiaryDetails();
+  const [printError, setPrintError] = useState("");
+  const rows = details.find((month) => month.monthName === monthName)?.data || [];
   const componentRef = useRef<HTMLDivElement>(null);
 
   const handlePrint = useReactToPrint({
@@ -23,13 +28,22 @@ const TourDiaryContainer = ({ openModal }: Props) => {
     }
   `,
   });
+  const requestPrint = () => {
+    const issues = validateEntriesForPrint(rows);
+    if (issues.length > 0) {
+      setPrintError(`${issues[0]} Fix all journey errors before printing.`);
+      return;
+    }
+    setPrintError("");
+    handlePrint();
+  };
 
   return (
     <div className="p-2  border-t border-gray-100  w-full flex flex-col space-x-4 ">
       <div className="flex justify-between space-x-3">
         <button
           className="group flex items-center justify-between rounded-lg border border-indigo-600 bg-indigo-600 px-5 py-1 text-white hover:bg-indigo-800"
-          onClick={handlePrint}
+          onClick={requestPrint}
         >
           Print Tour Diary out!
           <span className="ml-4 flex-shrink-0 rounded-full border border-current bg-white p-1 text-indigo-600 group-active:text-indigo-500">
@@ -57,6 +71,11 @@ const TourDiaryContainer = ({ openModal }: Props) => {
           Create New line
         </button>
       </div>
+      {printError && (
+        <p role="alert" className="mt-3 rounded border border-red-300 bg-red-50 p-3 text-sm text-red-800">
+          {printError}
+        </p>
+      )}
       <div className="text-xs font-bold" ref={componentRef}>
         <TourDiary />
       </div>

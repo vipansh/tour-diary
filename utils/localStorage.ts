@@ -44,4 +44,6 @@ export const STORAGE_KEYS = {
   MONTH_DATA_LIST: "monthDataList",
   DATABASE: "database",
   ADVANCE_DATABASE: "advanceDatabase",
+  AI_IMPORT_BACKUP: "aiImportBackup",
+  AI_IMPORT_AUDIT: "aiImportAudit",
 };
