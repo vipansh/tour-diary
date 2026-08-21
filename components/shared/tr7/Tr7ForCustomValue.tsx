@@ -2,19 +2,19 @@ import { format } from "date-fns";
 import React, { Fragment } from "react";
 import { OneDayDetailsProps } from "../../../data";
 import { convert24To12 } from "../../../utils/time";
+import { getEntryTotals } from "../../../utils/tr7Calculations";
 
 type Props = {
   detail: OneDayDetailsProps;
 };
 
 const Tr7ForCustomValue = ({ detail }: Props) => {
-  const distanceByBus = Number(detail.startingPoint?.distanceByBus || 0);
-  const distanceOnFoot = Number(detail.startingPoint?.distanceOnFoot || 0);
   const totalDays = Number(detail.totalDays || 0);
-  const busFareOneWay = Math.floor(distanceByBus * 2.5);
-  const onFootFareOneWay = Math.floor(distanceOnFoot * 1);
+  const totals = getEntryTotals(detail);
+  const busFareOneWay = totals.totalFairForBus / 2;
+  const onFootFareOneWay = totals.totalFairOnFoot / 2;
   const stayDaily = totalDays * 160;
-  const lineTotal = 2 * busFareOneWay + 2 * onFootFareOneWay + stayDaily + 50;
+  const lineTotal = totals.totalAmount;
 
   return (
     <tbody className="tr7-entry-group">

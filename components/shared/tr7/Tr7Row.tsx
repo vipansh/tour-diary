@@ -2,24 +2,18 @@ import React from "react";
 import { convert24To12 } from "../../../utils/time";
 import { format } from "date-fns";
 import { OneDayDetailsProps } from "../../../data";
+import { getEntryTotals } from "../../../utils/tr7Calculations";
 
 type Props = {
   detail: OneDayDetailsProps;
 };
 
 const Tr7Row = ({ detail }: Props) => {
-  const distanceByBus = Number(detail.distanceByBus || 0);
-  const distanceOnFoot = Number(detail.distanceOnFoot || 0);
-  const busFareOneWay = Math.floor(distanceByBus * 2.5);
-  const onFootFareOneWay = Math.floor(distanceOnFoot * 1);
-
-  const addDaily =
-    detail.date && new Date(detail.date) >= new Date("2023-05-22")
-      ? distanceOnFoot + distanceByBus >= 30
-      : distanceOnFoot + distanceByBus >= 8;
-
-  const lineTotal =
-    2 * busFareOneWay + 2 * onFootFareOneWay + (addDaily ? 50 : 0);
+  const totals = getEntryTotals(detail);
+  const busFareOneWay = totals.totalFairForBus / 2;
+  const onFootFareOneWay = totals.totalFairOnFoot / 2;
+  const addDaily = totals.totalDaily > 0;
+  const lineTotal = totals.totalAmount;
 
   return (
     <tbody className="tr7-entry-group">

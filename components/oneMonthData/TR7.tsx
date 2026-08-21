@@ -1,93 +1,24 @@
 import { useRouter } from "next/router";
-import React, { useMemo, useRef } from "react";
+import React, { useMemo, useRef, useState } from "react";
 import { OneDayDetailsProps, useTourDiaryDetails } from "../../data";
 
 import { useReactToPrint } from "react-to-print";
 import Tr7Row from "../shared/tr7/Tr7Row";
 import Tr7ForCustomValue from "../shared/tr7/Tr7ForCustomValue";
+import {
+  addTr7Totals,
+  getEntryTotals,
+  Tr7Totals,
+  ZERO_TR7_TOTALS,
+} from "../../utils/tr7Calculations";
+import { validateEntriesForPrint } from "../../utils/printValidation";
 
 type Props = {
   openModal: () => void;
 };
 
-type Totals = {
-  totalFairForBus: number;
-  totalFairOnFoot: number;
-  totalDaily: number;
-  totalAmount: number;
-};
-
 const FIRST_PAGE_ROW_LIMIT = 8;
 const NEXT_PAGE_ROW_LIMIT = 11;
-const DAILY_ALLOWANCE_SWITCH_DATE = "2023-05-22";
-const ZERO_TOTALS: Totals = {
-  totalFairForBus: 0,
-  totalFairOnFoot: 0,
-  totalDaily: 0,
-  totalAmount: 0,
-};
-
-const toNumber = (value: unknown) => {
-  const parsedValue = Number(value ?? 0);
-  return Number.isFinite(parsedValue) ? parsedValue : 0;
-};
-
-const isDailyAllowanceApplicable = (detail: OneDayDetailsProps) => {
-  const totalDistance =
-    toNumber(detail.distanceByBus) + toNumber(detail.distanceOnFoot);
-  const minimumDistance =
-    detail.date &&
-    new Date(detail.date) >= new Date(DAILY_ALLOWANCE_SWITCH_DATE)
-      ? 30
-      : 8;
-
-  return totalDistance >= minimumDistance;
-};
-
-const getEntryTotals = (detail: OneDayDetailsProps): Totals => {
-  if (detail.isCustom) {
-    const busDistance = toNumber(detail.startingPoint?.distanceByBus);
-    const onFootDistance = toNumber(detail.startingPoint?.distanceOnFoot);
-    const totalDays = toNumber(detail.totalDays);
-
-    const busFareOneWay = Math.floor(busDistance * 2.5);
-    const onFootFareOneWay = Math.floor(onFootDistance * 1);
-    const totalFairForBus = busFareOneWay * 2;
-    const totalFairOnFoot = onFootFareOneWay * 2;
-    const totalDaily = totalDays * 160 + 50;
-
-    return {
-      totalFairForBus,
-      totalFairOnFoot,
-      totalDaily,
-      totalAmount: totalFairForBus + totalFairOnFoot + totalDaily,
-    };
-  }
-
-  const busDistance = toNumber(detail.distanceByBus);
-  const onFootDistance = toNumber(detail.distanceOnFoot);
-  const busFareOneWay = Math.floor(busDistance * 2.5);
-  const onFootFareOneWay = Math.floor(onFootDistance * 1);
-  const totalFairForBus = busFareOneWay * 2;
-  const totalFairOnFoot = onFootFareOneWay * 2;
-  const totalDaily = isDailyAllowanceApplicable(detail) ? 50 : 0;
-
-  return {
-    totalFairForBus,
-    totalFairOnFoot,
-    totalDaily,
-    totalAmount: totalFairForBus + totalFairOnFoot + totalDaily,
-  };
-};
-
-const addTotals = (runningTotal: Totals, totalsToAdd: Totals): Totals => {
-  return {
-    totalFairForBus: runningTotal.totalFairForBus + totalsToAdd.totalFairForBus,
-    totalFairOnFoot: runningTotal.totalFairOnFoot + totalsToAdd.totalFairOnFoot,
-    totalDaily: runningTotal.totalDaily + totalsToAdd.totalDaily,
-    totalAmount: runningTotal.totalAmount + totalsToAdd.totalAmount,
-  };
-};
 
 const paginateRows = (rows: OneDayDetailsProps[]) => {
   if (!rows.length) {
@@ -114,8 +45,8 @@ const paginateRows = (rows: OneDayDetailsProps[]) => {
 type Tr7TableProps = {
   rowsOnPage: OneDayDetailsProps[];
   pageIndex: number;
-  currentPageTotal: Totals;
-  totalFair: Totals;
+  currentPageTotal: Tr7Totals;
+  totalFair: Tr7Totals;
   showPageTotal: boolean;
   showGrandTotal: boolean;
 };
@@ -269,6 +200,7 @@ const TR7 = ({ openModal }: Props) => {
   const { details } = useTourDiaryDetails();
   const router = useRouter();
   const { monthName } = router.query as { monthName: string };
+  const [printError, setPrintError] = useState("");
 
   const thisMontDetails = details.find(
     (detail) => detail.monthName === monthName,
@@ -284,8 +216,8 @@ const TR7 = ({ openModal }: Props) => {
       printPaginatedRows.map((rowsOnPage) =>
         rowsOnPage.reduce(
           (runningTotal, detail) =>
-            addTotals(runningTotal, getEntryTotals(detail)),
-          ZERO_TOTALS,
+            addTr7Totals(runningTotal, getEntryTotals(detail)),
+          ZERO_TR7_TOTALS,
         ),
       ),
     [printPaginatedRows],
@@ -293,8 +225,8 @@ const TR7 = ({ openModal }: Props) => {
   const totalFair = useMemo(
     () =>
       printPageTotals.reduce(
-        (runningTotal, onePageTotal) => addTotals(runningTotal, onePageTotal),
-        ZERO_TOTALS,
+        (runningTotal, onePageTotal) => addTr7Totals(runningTotal, onePageTotal),
+        ZERO_TR7_TOTALS,
       ),
     [printPageTotals],
   );
@@ -341,13 +273,22 @@ const TR7 = ({ openModal }: Props) => {
     }
   `,
   });
+  const requestPrint = () => {
+    const issues = validateEntriesForPrint(allRows);
+    if (issues.length > 0) {
+      setPrintError(`${issues[0]} Fix all journey errors before printing.`);
+      return;
+    }
+    setPrintError("");
+    handlePrint();
+  };
 
   return (
     <div className="p-2  border-t border-gray-100  w-full flex flex-col space-x-4 ">
       <div className="flex justify-between space-x-3">
         <button
           className="group flex items-center justify-between rounded-lg border border-indigo-600 bg-indigo-600 px-5 py-1 text-white hover:bg-indigo-800"
-          onClick={handlePrint}
+          onClick={requestPrint}
         >
           Print TR7 out!
           <span className="ml-4 flex-shrink-0 rounded-full border border-current bg-white p-1 text-indigo-600 group-active:text-indigo-500">
@@ -376,6 +317,12 @@ const TR7 = ({ openModal }: Props) => {
         </button>
       </div>
 
+      {printError && (
+        <p role="alert" className="mt-3 rounded border border-red-300 bg-red-50 p-3 text-sm text-red-800">
+          {printError}
+        </p>
+      )}
+
       <div className="overflow-hidden font-bold" ref={tr7componentRef}>
         <div className="tr7-screen-only">
           <div className="mx-3 font-bold text-xs">
@@ -384,7 +331,7 @@ const TR7 = ({ openModal }: Props) => {
               <Tr7Table
                 rowsOnPage={allRows}
                 pageIndex={0}
-                currentPageTotal={ZERO_TOTALS}
+                currentPageTotal={ZERO_TR7_TOTALS}
                 totalFair={totalFair}
                 showPageTotal={false}
                 showGrandTotal={true}
@@ -397,7 +344,7 @@ const TR7 = ({ openModal }: Props) => {
           {printPaginatedRows.map((rowsOnPage, pageIndex) => {
             const isFirstPage = pageIndex === 0;
             const isLastPage = pageIndex === printPaginatedRows.length - 1;
-            const currentPageTotal = printPageTotals[pageIndex] || ZERO_TOTALS;
+            const currentPageTotal = printPageTotals[pageIndex] || ZERO_TR7_TOTALS;
 
             return (
               <div key={`print-page-${pageIndex}`} className="tr7-print-page">

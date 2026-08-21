@@ -12,6 +12,19 @@ yarn dev
 
 Open [http://localhost:3000](http://localhost:3000) with your browser to see the result.
 
+## AI-assisted import
+
+The Months List includes a guarded “Paste notes with AI” workflow. It detects the past document period from the pasted dates, fuzzy-matches spelling variations to saved destinations, and reuses established stations, times, distances and recent journey templates. Purpose text is lightly formalized without adding facts. Only unmatched new destinations, ambiguous lines, or conflicts require manual attention. Approved new destinations are saved locally for later imports. Official Tour Diary and TR7 layouts are still rendered by the existing application components.
+
+Copy `.env.example` to `.env.local` and add a server-side OpenAI API key:
+
+```bash
+OPENAI_API_KEY=your-key
+OPENAI_MODEL=gpt-5.6-luna
+```
+
+Do not use a `NEXT_PUBLIC_` variable for the key. Conductor copies local `.env` files into newly created local workspaces automatically.
+
 You can start editing the page by modifying `pages/index.tsx`. The page auto-updates as you edit the file.
 
 [API routes](https://nextjs.org/docs/api-routes/introduction) can be accessed on [http://localhost:3000/api/hello](http://localhost:3000/api/hello). This endpoint can be edited in `pages/api/hello.ts`.
