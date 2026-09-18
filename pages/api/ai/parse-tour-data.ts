@@ -149,7 +149,7 @@ export default async function handler(
     ...parsedRequest.data.localReferences,
   ]);
   const model = process.env.OPENAI_MODEL || "gpt-5.6-luna";
-  const client = new OpenAI({ apiKey, timeout: 45_000, maxRetries: 1 });
+  const client = new OpenAI({ apiKey, timeout: 50_000, maxRetries: 1 });
 
   try {
     const result = await client.responses.parse({
@@ -268,4 +268,6 @@ export const config = {
   api: {
     bodyParser: { sizeLimit: "256kb" },
   },
+  // ponytail: Vercel also needs vercel.json maxDuration on Next 13.1; both kept in sync at 60s.
+  maxDuration: 60,
 };

@@ -1,0 +1,5 @@
+{
+  "functions": {
+    "pages/api/ai/parse-tour-data.ts": { "maxDuration": 60 }
+  }
+}

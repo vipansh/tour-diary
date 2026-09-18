@@ -147,7 +147,18 @@ export default function AiImportModal({ isOpen, onClose }: Props) {
           localReferences,
         }),
       });
-      const result = await response.json();
+      // ponytail: Vercel returns plain-text pages (timeouts, crashes), not JSON.
+      const body = await response.text();
+      let result: any;
+      try {
+        result = JSON.parse(body);
+      } catch (_error) {
+        throw new Error(
+          /TIMEOUT/i.test(body)
+            ? "The assistant took too long. Try again with fewer lines."
+            : "The assistant is unavailable right now. Nothing was saved.",
+        );
+      }
       if (!response.ok) throw new Error(result.error || "The assistant could not create a draft.");
       const parsed = result as AiParseResponse;
       const reviewedEntries = parsed.entries.map((entry, index) => {
